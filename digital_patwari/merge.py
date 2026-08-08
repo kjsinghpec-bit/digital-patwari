@@ -12,7 +12,11 @@ must be deterministic from document identity, hierarchy, and position.
 """
 from __future__ import annotations
 
+import argparse
+import json
+import sys
 from dataclasses import dataclass
+from pathlib import Path
 from typing import Iterable
 
 from digital_patwari.models import (
@@ -398,3 +402,79 @@ def _merge_area_observations(pages, id_map: _IdMap) -> list[AreaObservation]:
                 )
             )
     return merged
+
+
+def _atomic_write_text(path: Path, content: str) -> None:
+    tmp_path = path.with_suffix(path.suffix + ".tmp")
+    tmp_path.write_text(content, encoding="utf-8")
+    tmp_path.replace(path)
+
+
+def _load_document_from_json(path: Path) -> DigitalPatwariDocument:
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    return DigitalPatwariDocument.model_validate(payload)
+
+
+def _resolve_input_paths(input_path: Path) -> list[Path]:
+    if input_path.is_dir():
+        paths = sorted([p for p in input_path.iterdir() if p.is_file() and p.suffix == ".json"])
+        if not paths:
+            raise ValueError(f"Directory has no JSON files: {input_path}")
+        return paths
+    if input_path.is_file():
+        return [input_path]
+    raise FileNotFoundError(input_path)
+
+
+def _load_documents(input_paths: list[Path]) -> list[tuple[int, DigitalPatwariDocument]]:
+    documents: list[tuple[int, DigitalPatwariDocument]] = []
+    for path in sorted(input_paths):
+        if path.name.endswith("validation.json"):
+            continue
+        document = _load_document_from_json(path)
+        documents.append((len(documents) + 1, document))
+    if not documents:
+        raise ValueError("No valid DigitalPatwariDocument JSON files found in input path.")
+    return documents
+
+
+def _parse_args(argv: list[str] | None = None) -> argparse.Namespace:
+    parser = argparse.ArgumentParser(
+        description="Merge extracted per-page DigitalPatwariDocument JSON files into a single merged document."
+    )
+    parser.add_argument("input", help="Input directory containing page JSON files or a single JSON file.")
+    parser.add_argument(
+        "--output",
+        default=None,
+        help="Output JSON file path. Defaults to <input>/digital_patwari_document.json for directories and <input>.merged.json for a single file.",
+    )
+    return parser.parse_args(argv)
+
+
+def main(argv: list[str] | None = None) -> int:
+    args = _parse_args(argv)
+    input_path = Path(args.input)
+    input_paths = _resolve_input_paths(input_path)
+    documents = _load_documents(input_paths)
+    merge_result = merge_page_documents(documents)
+
+    if args.output is not None:
+        output_path = Path(args.output)
+    elif input_path.is_dir():
+        output_path = input_path / "digital_patwari_document.json"
+    else:
+        output_path = input_path.with_name(input_path.stem + ".merged.json")
+
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    _atomic_write_text(output_path, merge_result.document.model_dump_json(indent=2))
+
+    print(f"Merged {len(documents)} document(s) into: {output_path}")
+    if merge_result.warnings:
+        print("Warnings:")
+        for warning in merge_result.warnings:
+            print(f"- {warning}")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
