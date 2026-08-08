@@ -2,11 +2,13 @@ from digital_patwari.merge import merge_page_documents
 from tests.factories import (
     make_area,
     make_document,
+    make_khasra,
     make_khatauni,
     make_khewat,
     make_owner,
     make_remark,
 )
+from digital_patwari.ownership import resolve_owner_entitlements
 from patwari_agent import RemarkCategory, RemarkTarget
 
 
@@ -127,3 +129,90 @@ def test_document_header_disagreement_across_pages_is_a_warning_not_a_crash():
 
     assert result.document.document_header.village == "Village A"
     assert any("document_header" in warning for warning in result.warnings)
+
+
+def test_blank_khewat_cells_continue_198_185_across_khataunis_219_and_220():
+    """Catches the real failure where Column 2 value 219 was promoted to a Khewat."""
+    page4 = make_document(khewats=[
+        make_khewat("page4-khewat", khewat_number="198/185")
+    ])
+
+    khatauni_219 = make_khatauni(
+        "page5-khatauni", "page5-continuation",
+        khatauni_number="219",
+        recorded_area=make_area(kanal=11, marla=17),
+        khasras=[
+            make_khasra("page5-khasra-1", "page5-khatauni", kanal=4, marla=13, khasra_number="18//5/2"),
+            make_khasra("page5-khasra-2", "page5-khatauni", kanal=7, marla=4, khasra_number="18//6/1"),
+        ],
+    )
+    chaman_lal = make_owner(
+        "page5-chaman", "page5-continuation", "209/944",
+        raw_owner_name_parentage="Chaman Lal",
+        normalized_owner_name="Chaman Lal",
+        khatauni_id=None,
+    )
+    page5 = make_document(khewats=[
+        make_khewat(
+            "page5-continuation",
+            khewat_number=None,
+            continued_from_previous_page=True,
+            owners=[chaman_lal],
+            khataunis=[khatauni_219],
+        )
+    ])
+
+    khatauni_220 = make_khatauni(
+        "page6-khatauni", "page6-continuation",
+        khatauni_number="220",
+        recorded_area=make_area(kanal=11, marla=15),
+        khasras=[
+            make_khasra("page6-khasra-1", "page6-khatauni", kanal=8, marla=0, khasra_number="8//25"),
+            make_khasra("page6-khasra-2", "page6-khatauni", kanal=3, marla=2, khasra_number="18//5/1"),
+            make_khasra("page6-khasra-3", "page6-khatauni", kanal=0, marla=5, khasra_number="18//5/3"),
+            make_khasra("page6-khasra-4", "page6-khatauni", kanal=0, marla=8, khasra_number="18//6/2"),
+        ],
+    )
+    page6 = make_document(khewats=[
+        make_khewat(
+            "page6-continuation",
+            khewat_number=None,
+            continued_from_previous_page=True,
+            khataunis=[khatauni_220],
+        )
+    ])
+
+    merged = merge_page_documents([(6, page6), (4, page4), (5, page5)]).document
+
+    assert [k.khewat_number for k in merged.khewats] == ["198/185"]
+    khewat = merged.khewats[0]
+    assert [k.khatauni_number for k in khewat.khataunis] == ["219", "220"]
+    assert [len(k.khasras) for k in khewat.khataunis] == [2, 4]
+    assert [(k.recorded_total_area.kanal, k.recorded_total_area.marla) for k in khewat.khataunis] == [
+        (11, 17),
+        (11, 15),
+    ]
+
+    owner = next(o for o in khewat.owners if o.normalized_owner_name == "Chaman Lal")
+    assert owner.khatauni_id is None
+    [interest] = resolve_owner_entitlements([owner], khewat)
+    assert interest.khatauni_ids == tuple(k.khatauni_id for k in khewat.khataunis)
+    assert interest.area_sarsahi == 4248
+    assert interest.entitlement_sarsahi().numerator == 1881
+    assert interest.entitlement_sarsahi().denominator == 2
+
+
+def test_unresolved_blank_khewat_continuation_is_not_promoted_to_khewat():
+    orphan = make_document(khewats=[
+        make_khewat(
+            "orphan",
+            khewat_number=None,
+            continued_from_previous_page=True,
+            khataunis=[make_khatauni("KHT-1", "orphan", khatauni_number="219")],
+        )
+    ])
+
+    result = merge_page_documents([(5, orphan)])
+
+    assert result.document.khewats == []
+    assert any("no preceding printed Khewat" in warning for warning in result.warnings)
