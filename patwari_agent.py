@@ -15,10 +15,43 @@ from digital_patwari.document_io import (
     resolve_input_paths,
 )
 from digital_patwari.extraction import (
+    DocumentStatus,
     EXTRACTION_SYSTEM_PROMPT,
+    ExtractionProvider,
     ExtractionResult,
     FardExtractionParser,
     StructuredLLMClient,
+)
+from digital_patwari.observations import PageCellObservation, PageObservation
+from digital_patwari.observations import (
+    FieldObservation,
+    VerificationAction,
+    VerificationIssue,
+    VerificationReason,
+    VerificationRecord,
+    VerificationResponse,
+    VerificationStatus,
+    StructuralConfirmation,
+    StructuralCorrectionRecord,
+    StructuralCorrectionRequest,
+    StructuralOperationType,
+)
+from digital_patwari.assembly import (
+    DocumentAssemblyResult,
+    PageAssemblyResult,
+    assemble_page_observation,
+    assemble_page_observations,
+    apply_verification_response,
+    VerificationApplicationResult,
+    StructuralApplicationResult,
+    apply_structural_correction,
+    confirm_structural_correction,
+)
+from digital_patwari.cache import (
+    FilePageObservationCache,
+    MemoryPageObservationCache,
+    PageObservationCache,
+    page_cache_key,
 )
 from digital_patwari.models import (
     AreaKanalMarla,

@@ -79,7 +79,9 @@ class EffectiveOwnershipInterest:
     area_complete: bool
     missing_khatauni_ids: tuple[str, ...]
 
-    def entitlement_sarsahi(self) -> Fraction:
+    def entitlement_sarsahi(self) -> Fraction | None:
+        if self.owner.fraction is None:
+            return None
         return Fraction(self.area_sarsahi) * self.owner.fraction
 
 
@@ -100,7 +102,11 @@ def resolve_owner_entitlements(
     for owner in owner_rows:
         if owner.khatauni_id is not None:
             khatauni = khataunis_by_id.get(owner.khatauni_id)
-            if khatauni is None or khatauni.recorded_total_area is None:
+            if (
+                khatauni is None
+                or khatauni.recorded_total_area is None
+                or not khatauni.recorded_total_area.calculable
+            ):
                 interests.append(EffectiveOwnershipInterest(
                     owner=owner, scope=OwnershipScope.KHATAUNI,
                     khatauni_ids=(owner.khatauni_id,), area_sarsahi=0,
@@ -121,7 +127,11 @@ def resolve_owner_entitlements(
                 if kht.recorded_total_area is None:
                     missing.append(kht.khatauni_id)
                     continue
-                total += kht.recorded_total_area.total_sarsahi(marla_per_kanal, sarsahi_per_marla)
+                area = kht.recorded_total_area.total_sarsahi(marla_per_kanal, sarsahi_per_marla)
+                if area is None:
+                    missing.append(kht.khatauni_id)
+                    continue
+                total += area
             interests.append(EffectiveOwnershipInterest(
                 owner=owner, scope=OwnershipScope.KHEWAT,
                 khatauni_ids=tuple(kht.khatauni_id for kht in inheriting),

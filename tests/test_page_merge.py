@@ -61,6 +61,56 @@ def test_owner_reprinted_on_continuation_page_is_not_double_counted():
     assert len(merged.owners) == 1
 
 
+def test_remark_on_reprinted_owner_targets_retained_canonical_owner():
+    page1_owner = make_owner(
+        "page-1-owner",
+        "page-1-khewat",
+        "1/2",
+        raw_owner_name_parentage="Same Owner s/o Same Parent",
+    )
+    page1 = make_document(
+        khewats=[
+            make_khewat(
+                "page-1-khewat",
+                khewat_number="45",
+                total_share="1/2",
+                owners=[page1_owner],
+            )
+        ]
+    )
+
+    repeated_owner = make_owner(
+        "page-2-owner",
+        "page-2-khewat",
+        "1/2",
+        raw_owner_name_parentage="Same Owner s/o Same Parent",
+    )
+    page2 = make_document(
+        khewats=[
+            make_khewat(
+                "page-2-khewat",
+                khewat_number="45",
+                total_share="1/2",
+                owners=[repeated_owner],
+            )
+        ],
+        remarks=[
+            make_remark(
+                RemarkTarget.OWNER,
+                "page-2-owner",
+                RemarkCategory.INFORMATIONAL,
+            )
+        ],
+    )
+
+    document = merge_page_documents([(1, page1), (2, page2)]).document
+
+    assert len(document.khewats[0].owners) == 1
+    assert document.remarks[0].target_id == document.khewats[0].owners[0].owner_id
+    ag02 = next(gate for gate in run_axiom_gates(document).gates if gate.gate_id == "AG-02")
+    assert ag02.passed
+
+
 def test_remark_target_id_rewritten_to_regenerated_khewat_id():
     khewat = make_khewat("KHW-1", khewat_number="45")
     remark = make_remark(RemarkTarget.KHEWAT, "KHW-1", RemarkCategory.INFORMATIONAL)

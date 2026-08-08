@@ -16,6 +16,35 @@ def test_area_total_sarsahi():
     assert area.total_sarsahi() == 201
 
 
+def test_owner_with_unresolved_share_cannot_remain_present():
+    from patwari_agent import ExtractionStatus
+    from tests.factories import make_owner
+
+    owner = make_owner(
+        "OWN-X", "KHW-X", "1/2",
+        share_fraction=None,
+        status=ExtractionStatus.PRESENT,
+    )
+    assert owner.share_fraction is None
+    assert owner.status == ExtractionStatus.UNCERTAIN
+
+
+def test_corrected_owner_share_can_be_present_again():
+    from patwari_agent import ExtractionStatus
+    from tests.factories import make_owner
+
+    owner = make_owner(
+        "OWN-X", "KHW-X", "1/2",
+        share_fraction=None,
+        status=ExtractionStatus.UNCERTAIN,
+    )
+    corrected = type(owner).model_validate({
+        **owner.model_dump(), "share_fraction": "1/4", "status": "present",
+    })
+    assert corrected.share_fraction == "1/4"
+    assert corrected.status.value == "present"
+
+
 def test_area_rejects_negative_kanal():
     with pytest.raises(pydantic.ValidationError):
         AreaKanalMarlaSarsahi(kanal=-1)

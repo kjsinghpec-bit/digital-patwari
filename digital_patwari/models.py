@@ -4,7 +4,7 @@ from enum import Enum
 from fractions import Fraction
 from typing import Any
 
-from pydantic import BaseModel, ConfigDict, Field, StringConstraints, field_validator
+from pydantic import BaseModel, ConfigDict, Field, StringConstraints, field_validator, model_validator
 from typing_extensions import Annotated
 
 from digital_patwari.normalization import parse_fraction
@@ -173,17 +173,34 @@ class SourceReference(BaseModel):
 
 class AreaKanalMarlaSarsahi(BaseModel):
     model_config = ConfigDict(extra="forbid")
-    kanal: int = Field(default=0, ge=0)
-    marla: int = Field(default=0, ge=0)
-    sarsahi: int = Field(default=0, ge=0)
+    # None is an explicit unresolved numeric component, never an invented 0.
+    kanal: int | None = Field(default=0, ge=0)
+    marla: int | None = Field(default=0, ge=0)
+    sarsahi: int | None = Field(default=0, ge=0)
     raw_text: str | None = None
     status: ExtractionStatus = ExtractionStatus.PRESENT
 
-    def total_marla(self, marla_per_kanal: int = 20) -> int:
+    @model_validator(mode="after")
+    def unresolved_component_is_uncertain(self) -> "AreaKanalMarlaSarsahi":
+        if None in (self.kanal, self.marla, self.sarsahi) and self.status == ExtractionStatus.PRESENT:
+            self.status = ExtractionStatus.UNCERTAIN
+        return self
+
+    @property
+    def calculable(self) -> bool:
+        return None not in (self.kanal, self.marla, self.sarsahi)
+
+    def total_marla(self, marla_per_kanal: int = 20) -> int | None:
+        if not self.calculable:
+            return None
+        assert self.kanal is not None and self.marla is not None
         return (self.kanal * marla_per_kanal) + self.marla
 
-    def total_sarsahi(self, marla_per_kanal: int = 20, sarsahi_per_marla: int = 9) -> int:
-        return (self.total_marla(marla_per_kanal) * sarsahi_per_marla) + self.sarsahi
+    def total_sarsahi(self, marla_per_kanal: int = 20, sarsahi_per_marla: int = 9) -> int | None:
+        total_marla = self.total_marla(marla_per_kanal)
+        if total_marla is None or self.sarsahi is None:
+            return None
+        return (total_marla * sarsahi_per_marla) + self.sarsahi
 
 # Backward-compatible alias: earlier revisions of this schema used
 # AreaKanalMarla (kanal/marla only, no sarsahi unit).
@@ -276,18 +293,27 @@ class Owner(BaseModel):
     raw_owner_name_parentage: NonEmptyString
     normalized_owner_name: str | None = None
     raw_share_fraction: NonEmptyString
-    share_fraction: NonEmptyString
+    # None means the printed raw fraction could not be normalized safely.
+    # The Owner row remains canonical/evidence-bearing, but arithmetic must
+    # skip it until a human correction supplies a valid normalized fraction.
+    share_fraction: NonEmptyString | None
     status: ExtractionStatus = ExtractionStatus.PRESENT
     source: SourceReference | None = None
 
     @field_validator("share_fraction", mode="before")
     @classmethod
-    def normalize_share_fraction(cls, value: Any) -> str:
-        return parse_fraction(value)
+    def normalize_share_fraction(cls, value: Any) -> str | None:
+        return None if value is None else parse_fraction(value)
+
+    @model_validator(mode="after")
+    def unresolved_share_is_never_present(self) -> "Owner":
+        if self.share_fraction is None and self.status == ExtractionStatus.PRESENT:
+            self.status = ExtractionStatus.UNCERTAIN
+        return self
 
     @property
-    def fraction(self) -> Fraction:
-        return Fraction(self.share_fraction)
+    def fraction(self) -> Fraction | None:
+        return None if self.share_fraction is None else Fraction(self.share_fraction)
 
 class Khasra(BaseModel):
     model_config = ConfigDict(extra="forbid")
@@ -321,19 +347,19 @@ class Khatauni(BaseModel):
     # Khatauni has its own disjoint owner group; defaults to "1/1" like
     # Khewat.total_share.
     raw_total_share: NonEmptyString = "1/1"
-    total_share: NonEmptyString = "1/1"
+    total_share: NonEmptyString | None = "1/1"
     recorded_total_area: AreaKanalMarlaSarsahi | None = None
     khasras: list[Khasra] = Field(default_factory=list)
     source: SourceReference | None = None
 
     @field_validator("total_share", mode="before")
     @classmethod
-    def normalize_total_share(cls, value: Any) -> str:
-        return parse_fraction(value)
+    def normalize_total_share(cls, value: Any) -> str | None:
+        return None if value is None else parse_fraction(value)
 
     @property
-    def expected_total_share(self) -> Fraction:
-        return Fraction(self.total_share)
+    def expected_total_share(self) -> Fraction | None:
+        return None if self.total_share is None else Fraction(self.total_share)
 
 class Khewat(BaseModel):
     model_config = ConfigDict(extra="forbid")
@@ -348,19 +374,19 @@ class Khewat(BaseModel):
     continued_from_previous_page: bool = False
     owner_group_ref: str | None = None
     raw_total_share: NonEmptyString = "1/1"
-    total_share: NonEmptyString = "1/1"
+    total_share: NonEmptyString | None = "1/1"
     owners: list[Owner] = Field(default_factory=list)
     khataunis: list[Khatauni] = Field(default_factory=list)
     source: SourceReference | None = None
 
     @field_validator("total_share", mode="before")
     @classmethod
-    def normalize_total_share(cls, value: Any) -> str:
-        return parse_fraction(value)
+    def normalize_total_share(cls, value: Any) -> str | None:
+        return None if value is None else parse_fraction(value)
 
     @property
-    def expected_total_share(self) -> Fraction:
-        return Fraction(self.total_share)
+    def expected_total_share(self) -> Fraction | None:
+        return None if self.total_share is None else Fraction(self.total_share)
 
 class ParcelInterest(BaseModel):
     """A person's interest in SPECIFIC Khasra parcels, as opposed to an

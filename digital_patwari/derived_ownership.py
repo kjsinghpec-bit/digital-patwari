@@ -142,6 +142,21 @@ def derive_khewat_ownership(document: DigitalPatwariDocument, khewat: Khewat) ->
         operative = [m for m in relevant if m.is_operative]
         non_operative = [m for m in relevant if not m.is_operative]
 
+        if base_share is None:
+            positions.append(DerivedOwnershipPosition(
+                owner_id=owner.owner_id,
+                khewat_id=khewat.khewat_id,
+                person_name=owner.raw_owner_name_parentage,
+                base_share=Fraction(0),
+                applied_effects=(),
+                derived_share=Fraction(0),
+                unapplied_mutation_ids=tuple(m.mutation_id for m in relevant),
+                unapplied_reason="Not applied while the base share is unverified.",
+                derivation_failed=True,
+                failure_reason="Raw owner share has an invalid format and requires human verification.",
+            ))
+            continue
+
         running = base_share
         applied: list[AppliedMutationEffect] = []
         derivation_failed = False

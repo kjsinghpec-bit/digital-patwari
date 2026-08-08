@@ -62,6 +62,13 @@ def _first_non_none(values: Iterable):
     return None
 
 
+def _first_value_unless_any_unresolved(values: Iterable):
+    materialized = list(values)
+    if any(value is None for value in materialized):
+        return None
+    return materialized[0] if materialized else None
+
+
 def merge_page_documents(pages: list[tuple[int, DigitalPatwariDocument]]) -> MergeResult:
     """Merge a list of (page_number, per-page DigitalPatwariDocument) pairs,
     in page order, into one document. Every page independently validated
@@ -219,7 +226,7 @@ def _merge_khewats(pages) -> tuple[list[Khewat], _IdMap, list[str]]:
                     raw_cultivator_name=_first_non_none(k.raw_cultivator_name for _, k in kgroup),
                     raw_possession_type=_first_non_none(k.raw_possession_type for _, k in kgroup),
                     raw_total_share=_first_non_none(k.raw_total_share for _, k in kgroup) or "1/1",
-                    total_share=_first_non_none(k.total_share for _, k in kgroup) or "1/1",
+                    total_share=_first_value_unless_any_unresolved(k.total_share for _, k in kgroup),
                     recorded_total_area=_prefer_area_values(
                         _first_non_none(k.recorded_total_area for _, k in kgroup),
                         _first_non_none(k.recorded_total_area for _, k in reversed(kgroup)),
@@ -233,7 +240,7 @@ def _merge_khewats(pages) -> tuple[list[Khewat], _IdMap, list[str]]:
         # (resolved Khatauni scope, raw name+parentage, raw share) -- real
         # Fards commonly reprint a Khewat's owner block on every continuation
         # page, and counting each reprint would double the share in AG-01.
-        seen_owner_keys: set[tuple[str | None, str, str]] = set()
+        owner_id_by_dedup_key: dict[tuple[str | None, str, str], str] = {}
         merged_owners: list[Owner] = []
         for page_number, khewat_page in group:
             for owner in khewat_page.owners:
@@ -243,11 +250,13 @@ def _merge_khewats(pages) -> tuple[list[Khewat], _IdMap, list[str]]:
                     else None
                 )
                 dedup_key = (mapped_khatauni_id, owner.raw_owner_name_parentage, owner.raw_share_fraction)
-                if dedup_key in seen_owner_keys:
+                retained_owner_id = owner_id_by_dedup_key.get(dedup_key)
+                if retained_owner_id is not None:
+                    id_map[("Owner", page_number, owner.owner_id)] = retained_owner_id
                     continue
-                seen_owner_keys.add(dedup_key)
                 owner_counter += 1
                 new_owner_id = f"OWN-{owner_counter}"
+                owner_id_by_dedup_key[dedup_key] = new_owner_id
                 id_map[("Owner", page_number, owner.owner_id)] = new_owner_id
                 merged_owners.append(
                     owner.model_copy(
@@ -265,7 +274,7 @@ def _merge_khewats(pages) -> tuple[list[Khewat], _IdMap, list[str]]:
                 khewat_number=khewat_number,
                 owner_group_ref=_first_non_none(k.owner_group_ref for _, k in group),
                 raw_total_share=_first_non_none(k.raw_total_share for _, k in group) or "1/1",
-                total_share=_first_non_none(k.total_share for _, k in group) or "1/1",
+                total_share=_first_value_unless_any_unresolved(k.total_share for _, k in group),
                 owners=merged_owners,
                 khataunis=merged_khataunis,
                 source=_first_non_none(k.source for _, k in group),
@@ -293,6 +302,10 @@ def _prefer_area_values(
         return old_area
     old_sarsahi = old_area.total_sarsahi(20, 9)
     new_sarsahi = new_area.total_sarsahi(20, 9)
+    if old_sarsahi is None:
+        return new_area if new_sarsahi is not None else old_area
+    if new_sarsahi is None:
+        return old_area
     return new_area if new_sarsahi >= old_sarsahi else old_area
 
 
@@ -300,8 +313,8 @@ def _merge_khasra_rows(existing: Khasra, candidate: Khasra) -> Khasra:
     return existing.model_copy(update={
         "murabba_number": _prefer_non_empty(existing.murabba_number, candidate.murabba_number),
         "area_kanal_marla": candidate.area_kanal_marla
-        if existing.area_kanal_marla.total_sarsahi(20, 9) == 0
-        and candidate.area_kanal_marla.total_sarsahi(20, 9) != 0
+        if existing.area_kanal_marla.total_sarsahi(20, 9) in (None, 0)
+        and candidate.area_kanal_marla.total_sarsahi(20, 9) not in (None, 0)
         else existing.area_kanal_marla,
         "raw_soil_classification": _prefer_non_empty(existing.raw_soil_classification, candidate.raw_soil_classification),
         "normalized_soil_classification": _prefer_non_empty(existing.normalized_soil_classification, candidate.normalized_soil_classification),

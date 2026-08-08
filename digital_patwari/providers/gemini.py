@@ -12,7 +12,7 @@ from pydantic import BaseModel
 
 # Maximum times a too-complex schema is halved before giving up and raising
 # the underlying error. 2**_MAX_SPLIT_DEPTH sub-requests in the worst case.
-_MAX_SPLIT_DEPTH = 3
+_MAX_SPLIT_DEPTH = 8
 
 # Transient failure classes worth a bounded retry. Permanent 4xx errors
 # (bad request, auth, not found) are never retried.
@@ -55,6 +55,74 @@ def _strip_unsupported_schema_keys(node):
     return cleaned
 
 
+def _explicit_json_value_schema(depth: int = 3) -> dict:
+    """Finite Gemini-compatible JSON value schema used instead of `{}` Any."""
+    scalars = [
+        {"type": "null"},
+        {"type": "boolean"},
+        {"type": "number"},
+        {"type": "string"},
+    ]
+    if depth <= 0:
+        return {"anyOf": scalars}
+    child = _explicit_json_value_schema(depth - 1)
+    return {
+        "anyOf": [
+            *scalars,
+            {"type": "array", "items": child},
+            {"type": "object", "additionalProperties": child},
+        ]
+    }
+
+
+def _replace_permissive_any_schemas(node, parent_key=None):
+    if isinstance(node, list):
+        return [_replace_permissive_any_schemas(item, parent_key) for item in node]
+    if not isinstance(node, dict):
+        return node
+    if not node:
+        if parent_key in _NAME_KEYED_MAP_KEYS:
+            return {}
+        return _explicit_json_value_schema()
+    return {key: _replace_permissive_any_schemas(value, key) for key, value in node.items()}
+
+
+def _deep_merge(first: dict, second: dict) -> dict:
+    merged = copy.deepcopy(first)
+    for key, value in second.items():
+        if key in merged and isinstance(merged[key], dict) and isinstance(value, dict):
+            merged[key] = _deep_merge(merged[key], value)
+        else:
+            merged[key] = copy.deepcopy(value)
+    return merged
+
+
+def _splittable_property_path(node, path=()):
+    """Find the largest nested properties map, including inside $defs/anyOf."""
+    best = None
+    if isinstance(node, dict):
+        properties = node.get("properties")
+        if isinstance(properties, dict) and len(properties) >= 2:
+            best = (len(properties), path)
+        for key, value in node.items():
+            candidate = _splittable_property_path(value, (*path, key))
+            if candidate is not None and (best is None or candidate[0] > best[0]):
+                best = candidate
+    elif isinstance(node, list):
+        for index, value in enumerate(node):
+            candidate = _splittable_property_path(value, (*path, index))
+            if candidate is not None and (best is None or candidate[0] > best[0]):
+                best = candidate
+    return best
+
+
+def _node_at_path(root, path):
+    node = root
+    for part in path:
+        node = node[part]
+    return node
+
+
 class MyLLMAdapter:
     def __init__(
         self,
@@ -73,6 +141,11 @@ class MyLLMAdapter:
         self.model_name = model_name
         self.timeout_seconds = timeout_seconds
         self.max_retries = max_retries
+
+    @property
+    def cache_identity(self) -> str:
+        """Provider/model identity included in per-page cache keys."""
+        return f"gemini:{self.model_name}"
 
     def _status_code(self, exc: Exception) -> int | None:
         status_code = getattr(exc, "code", None) or getattr(exc, "status_code", None)
@@ -109,21 +182,22 @@ class MyLLMAdapter:
                 time.sleep(2 ** attempt)
 
     def _split_schema(self, schema: dict) -> tuple[dict, dict] | None:
-        """Split a schema's top-level properties into two halves, each keeping
-        every $def so nested $ref targets stay resolvable. Returns None when
-        the schema can't be split further (fewer than 2 properties)."""
-        properties = schema.get("properties", {})
-        keys = list(properties.keys())
-        if len(keys) < 2:
+        """Split the largest property map at any nesting depth."""
+        found = _splittable_property_path(schema)
+        if found is None:
             return None
-
+        _, path = found
+        target = _node_at_path(schema, path)
+        properties = target.get("properties", {})
+        keys = list(properties.keys())
         midpoint = len(keys) // 2
         groups = (keys[:midpoint], keys[midpoint:])
         halves = []
         for group in groups:
             half = copy.deepcopy(schema)
-            half["properties"] = {k: v for k, v in properties.items() if k in group}
-            half["required"] = [r for r in schema.get("required", []) if r in group]
+            half_target = _node_at_path(half, path)
+            half_target["properties"] = {k: v for k, v in properties.items() if k in group}
+            half_target["required"] = [r for r in target.get("required", []) if r in group]
             halves.append(half)
         return halves[0], halves[1]
 
@@ -145,10 +219,11 @@ class MyLLMAdapter:
             first_half, second_half = split
             merged: dict = {}
             for half in (first_half, second_half):
-                merged.update(
+                merged = _deep_merge(
+                    merged,
                     self._generate_with_schema_fallback(
                         contents=contents, system_prompt=system_prompt, schema=half, depth=depth + 1
-                    )
+                    ),
                 )
             return merged
 
@@ -162,7 +237,9 @@ class MyLLMAdapter:
                 )
             )
 
-        schema = _strip_unsupported_schema_keys(json_schema.model_json_schema())
+        schema = _replace_permissive_any_schemas(
+            _strip_unsupported_schema_keys(json_schema.model_json_schema())
+        )
         merged = self._generate_with_schema_fallback(
             contents=contents, system_prompt=system_prompt, schema=schema, depth=0
         )

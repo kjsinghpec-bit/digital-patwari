@@ -95,10 +95,12 @@ def khewat_total_area_sarsahi(
     total = 0
     missing: list[str] = []
     for khatauni in khewat.khataunis:
-        if khatauni.recorded_total_area is None:
+        if khatauni.recorded_total_area is None or not khatauni.recorded_total_area.calculable:
             missing.append(khatauni.khatauni_id)
             continue
-        total += khatauni.recorded_total_area.total_sarsahi(marla_per_kanal, sarsahi_per_marla)
+        area = khatauni.recorded_total_area.total_sarsahi(marla_per_kanal, sarsahi_per_marla)
+        assert area is not None
+        total += area
     return total, not missing, missing
 
 
@@ -390,6 +392,7 @@ class FardQueryEngine:
         total_sarsahi = Fraction(0)
         any_incomplete = False
         any_uncertain_status = any(o.status != ExtractionStatus.PRESENT for o in matches)
+        unresolved_share_rows = [o for o in matches if o.fraction is None]
         evidence: list[SourceReference] = []
 
         for khewat_id in khewat_ids:
@@ -399,9 +402,25 @@ class FardQueryEngine:
                 per_khewat_lines.append(f"Khewat {khewat_id}: not found in this document (dangling reference).")
                 continue
             rows = [m for m in matches if m.khewat_id == khewat_id]
+            unresolved_here = [row for row in rows if row.fraction is None]
+            if unresolved_here:
+                any_incomplete = True
+                raw_values = ", ".join(row.raw_share_fraction for row in unresolved_here)
+                per_khewat_lines.append(
+                    f"Khewat {khewat_id}: ownership calculation withheld because share {raw_values!r} needs verification."
+                )
+                evidence.extend(s for s in (*(o.source for o in rows), khewat.source) if s)
+                continue
             interests = resolve_owner_entitlements(rows, khewat, self.marla_per_kanal, self.sarsahi_per_marla)
             khewat_complete = all(i.area_complete for i in interests)
-            khewat_sarsahi = sum((i.entitlement_sarsahi() for i in interests), Fraction(0))
+            entitlements = [i.entitlement_sarsahi() for i in interests]
+            if any(value is None for value in entitlements):
+                any_incomplete = True
+                per_khewat_lines.append(
+                    f"Khewat {khewat_id}: ownership calculation withheld because a share needs verification."
+                )
+                continue
+            khewat_sarsahi = sum((value for value in entitlements if value is not None), Fraction(0))
             if not khewat_complete:
                 any_incomplete = True
                 per_khewat_lines.append(f"Khewat {khewat_id}: incomplete (missing recorded area for one or more Khataunis).")
@@ -424,7 +443,8 @@ class FardQueryEngine:
                 record_says=record_says, calculated=None, interpretation=interpretation,
                 evidence=evidence, uncertain=True,
                 uncertainty_reason=(
-                    "One or more Khewats have incomplete area data." if any_incomplete
+                    "One or more owner shares are unresolved and require verification before totals can be calculated."
+                    if unresolved_share_rows else "One or more Khewats have incomplete area data." if any_incomplete
                     else "One or more of this owner's rows have an uncertain/illegible extraction status."
                 ),
             )

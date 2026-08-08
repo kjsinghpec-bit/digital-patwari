@@ -104,8 +104,12 @@ def resolve_parcel_interests(
             seen_ids.add(khasra.khasra_id)
             found.append(khasra)
 
+        calculable_found = [k for k in found if k.area_kanal_marla.calculable]
         area_sarsahi = sum(
-            k.area_kanal_marla.total_sarsahi(marla_per_kanal, sarsahi_per_marla) for k in found
+            value for value in (
+                k.area_kanal_marla.total_sarsahi(marla_per_kanal, sarsahi_per_marla)
+                for k in calculable_found
+            ) if value is not None
         )
         mutation = mutations_by_id.get(interest.mutation_id) if interest.mutation_id else None
 
@@ -113,7 +117,7 @@ def resolve_parcel_interests(
             interest=interest,
             resolved_khasras=tuple(found),
             area_sarsahi=area_sarsahi,
-            area_complete=not unresolved and bool(found),
+            area_complete=not unresolved and len(calculable_found) == len(found) and bool(found),
             unresolved_khasra_ids=tuple(unresolved),
             mutation_status=mutation.status if mutation else None,
         ))

@@ -1,3 +1,10 @@
 .env
 __pycache__/
 *.pyc
+.page-observation-cache/
+digital_patwari_document.json
+digital_patwari_validation.json
+digital_patwari_verification.json
+real-fard-verification-*/
+real_fard_verification_*/
+verification-output-*/

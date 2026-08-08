@@ -39,9 +39,31 @@ def validate_ag01_khewat_share_summation(document: DigitalPatwariDocument) -> Ga
             continue
 
         if pooled:
-            checked += 1
-            actual_total = sum((owner.fraction for owner in pooled), Fraction(0))
+            calculable = [owner for owner in pooled if owner.fraction is not None]
+            unsafe = [owner for owner in pooled if owner.fraction is None]
+            if unsafe:
+                skipped += len(unsafe)
+                for owner in unsafe:
+                    issues.append(ValidationIssue(
+                        gate_id="AG-01", severity=ValidationSeverity.WARNING,
+                        entity_type="Owner", entity_id=owner.owner_id,
+                        actual=owner.raw_share_fraction,
+                        message="Share summation excluded this owner because its raw fraction needs verification.",
+                    ))
+            if not calculable:
+                continue
             expected_total = khewat.expected_total_share
+            if expected_total is None:
+                skipped += 1
+                issues.append(ValidationIssue(
+                    gate_id="AG-01", severity=ValidationSeverity.WARNING,
+                    entity_type="Khewat", entity_id=khewat.khewat_id,
+                    actual=khewat.raw_total_share,
+                    message="Share summation withheld because the Khewat total share needs verification.",
+                ))
+                continue
+            checked += 1
+            actual_total = sum((owner.fraction for owner in calculable), Fraction(0))
 
             if actual_total != expected_total:
                 difference = actual_total - expected_total
@@ -53,10 +75,32 @@ def validate_ag01_khewat_share_summation(document: DigitalPatwariDocument) -> Ga
 
         khataunis_by_id = {kht.khatauni_id: kht for kht in khewat.khataunis}
         for khatauni_id, owners in scoped_by_khatauni.items():
+            calculable = [owner for owner in owners if owner.fraction is not None]
+            unsafe = [owner for owner in owners if owner.fraction is None]
+            if unsafe:
+                skipped += len(unsafe)
+                for owner in unsafe:
+                    issues.append(ValidationIssue(
+                        gate_id="AG-01", severity=ValidationSeverity.WARNING,
+                        entity_type="Owner", entity_id=owner.owner_id,
+                        actual=owner.raw_share_fraction,
+                        message="Share summation excluded this owner because its raw fraction needs verification.",
+                    ))
+            if not calculable:
+                continue
             checked += 1
             khatauni = khataunis_by_id.get(khatauni_id)
             expected_total = khatauni.expected_total_share if khatauni is not None else Fraction(1)
-            actual_total = sum((owner.fraction for owner in owners), Fraction(0))
+            if expected_total is None:
+                skipped += 1
+                issues.append(ValidationIssue(
+                    gate_id="AG-01", severity=ValidationSeverity.WARNING,
+                    entity_type="Khatauni", entity_id=khatauni_id,
+                    actual=khatauni.raw_total_share if khatauni is not None else None,
+                    message="Share summation withheld because the Khatauni total share needs verification.",
+                ))
+                continue
+            actual_total = sum((owner.fraction for owner in calculable), Fraction(0))
 
             if actual_total != expected_total:
                 difference = actual_total - expected_total
@@ -184,7 +228,12 @@ def validate_ag03_area_consistency(
 
     for khewat in document.khewats:
         for khatauni in khewat.khataunis:
-            if khatauni.recorded_total_area is None or not khatauni.khasras:
+            if (
+                khatauni.recorded_total_area is None
+                or not khatauni.recorded_total_area.calculable
+                or not khatauni.khasras
+                or any(not k.area_kanal_marla.calculable for k in khatauni.khasras)
+            ):
                 skipped += 1
                 issues.append(ValidationIssue(
                     gate_id="AG-03", severity=ValidationSeverity.WARNING, entity_type="Khatauni",
@@ -197,6 +246,7 @@ def validate_ag03_area_consistency(
             actual_sarsahi = sum(
                 k.area_kanal_marla.total_sarsahi(marla_per_kanal, sarsahi_per_marla) for k in khatauni.khasras
             )
+            assert expected_sarsahi is not None
             difference = actual_sarsahi - expected_sarsahi
 
             if abs(difference) > tolerance_sarsahi:
@@ -321,17 +371,23 @@ def validate_ag05_mutation_share_area_consistency(
         scope_sarsahi = 0
         incomplete = False
         for khatauni in khewat.khataunis:
-            if khatauni.recorded_total_area is None:
+            if khatauni.recorded_total_area is None or not khatauni.recorded_total_area.calculable:
                 incomplete = True
                 continue
-            scope_sarsahi += khatauni.recorded_total_area.total_sarsahi(marla_per_kanal, sarsahi_per_marla)
+            area = khatauni.recorded_total_area.total_sarsahi(marla_per_kanal, sarsahi_per_marla)
+            assert area is not None
+            scope_sarsahi += area
         if incomplete or scope_sarsahi == 0:
             skipped += 1
             continue
 
+        stated_value = mutation.area_transferred.total_sarsahi(marla_per_kanal, sarsahi_per_marla)
+        if stated_value is None:
+            skipped += 1
+            continue
         checked += 1
         expected = Fraction(scope_sarsahi) * mutation.transferred_fraction
-        stated = Fraction(mutation.area_transferred.total_sarsahi(marla_per_kanal, sarsahi_per_marla))
+        stated = Fraction(stated_value)
         if expected != stated:
             issues.append(ValidationIssue(
                 gate_id="AG-05", severity=ValidationSeverity.ERROR, entity_type="Mutation",
@@ -365,6 +421,8 @@ def validate_ag06_area_observation_scopes(
 
     seen: dict[tuple, list[str]] = {}
     for observation in document.area_observations:
+        if not observation.area.calculable:
+            continue
         checked += 1
         key = (
             observation.scope,
