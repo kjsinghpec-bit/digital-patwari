@@ -1,4 +1,8 @@
 from digital_patwari.merge import merge_page_documents
+from digital_patwari.ownership import resolve_owner_entitlements
+from digital_patwari.query import FardQueryEngine
+from digital_patwari.reconciliation import reconcile
+from digital_patwari.validation import run_axiom_gates
 from tests.factories import (
     make_area,
     make_document,
@@ -7,8 +11,8 @@ from tests.factories import (
     make_khewat,
     make_owner,
     make_remark,
+    make_source,
 )
-from digital_patwari.ownership import resolve_owner_entitlements
 from patwari_agent import RemarkCategory, RemarkTarget
 
 
@@ -216,3 +220,118 @@ def test_unresolved_blank_khewat_continuation_is_not_promoted_to_khewat():
 
     assert result.document.khewats == []
     assert any("no preceding printed Khewat" in warning for warning in result.warnings)
+
+
+def test_page_documents_out_of_order_are_merged_based_on_page_number():
+    page1_khewat = make_khewat(
+        "KHW-1",
+        khewat_number="198/185",
+        owners=[make_owner("OWN-1", "KHW-1", "1/2")],
+        khataunis=[
+            make_khatauni(
+                "KHT-1",
+                "KHW-1",
+                khatauni_number="219",
+                recorded_area=make_area(kanal=11),
+                khasras=[
+                    make_khasra("KHS-1", "KHT-1", kanal=4),
+                    make_khasra("KHS-2", "KHT-1", kanal=7),
+                ],
+            )
+        ],
+    )
+    page2_khewat = make_khewat(
+        "KHW-1",
+        khewat_number="198/185",
+        khataunis=[
+            make_khatauni(
+                "KHT-2",
+                "KHW-1",
+                khatauni_number="220",
+                recorded_area=make_area(kanal=11),
+                khasras=[
+                    make_khasra("KHS-3", "KHT-2", kanal=8),
+                    make_khasra("KHS-4", "KHT-2", kanal=3),
+                    make_khasra("KHS-5", "KHT-2", marla=5),
+                    make_khasra("KHS-6", "KHT-2", marla=8),
+                ],
+            )
+        ],
+    )
+
+    page1 = make_document(khewats=[page1_khewat])
+    page2 = make_document(khewats=[page2_khewat])
+
+    # Intentionally provide pages out of order to ensure the merge sorts by
+    # the embedded page numbers rather than by the input list order.
+    merged = merge_page_documents([(2, page2), (1, page1)]).document
+
+    assert len(merged.khewats) == 1
+    merged_khewat = merged.khewats[0]
+    assert merged_khewat.khewat_number == "198/185"
+    assert len(merged_khewat.owners) == 1
+    assert [k.khatauni_number for k in merged_khewat.khataunis] == ["219", "220"]
+
+
+def test_khewat_continuation_with_blank_owner_column_preserves_owner_and_inherits_area():
+    page1_khewat = make_khewat(
+        "KHW-1",
+        khewat_number="198/185",
+        owners=[
+            make_owner(
+                "OWN-1", "KHW-1", "209/944",
+                raw_owner_name_parentage="Chaman Lal s/o Dharampal s/o Sambhu Nath",
+                source=make_source(page=1, column_ref="3"),
+            )
+        ],
+        khataunis=[
+            make_khatauni(
+                "KHT-1", "KHW-1", khatauni_number="219",
+                recorded_area=make_area(kanal=11, marla=17),
+                source=make_source(page=1, column_ref="2"),
+                khasras=[
+                    make_khasra("KHS-1", "KHT-1", kanal=4, marla=13, khasra_number="18//5/2", source=make_source(page=1, column_ref="6")),
+                    make_khasra("KHS-2", "KHT-1", kanal=7, marla=4, khasra_number="18//6/1", source=make_source(page=1, column_ref="6")),
+                ],
+            )
+        ],
+    )
+    # Page 2's Column 1 is visually blank -- the Khewat continues from page 1
+    # rather than reprinting "198/185", matching the real Column-1 blank-cell
+    # continuation semantics rather than a repeated explicit Khewat number.
+    page2_khewat = make_khewat(
+        "KHW-2",
+        khewat_number=None,
+        continued_from_previous_page=True,
+        owners=[],
+        khataunis=[
+            make_khatauni(
+                "KHT-2", "KHW-2", khatauni_number="220",
+                recorded_area=make_area(kanal=11, marla=15),
+                source=make_source(page=2, column_ref="2"),
+                khasras=[
+                    make_khasra("KHS-3", "KHT-2", kanal=8, khasra_number="8//25", source=make_source(page=2, column_ref="6")),
+                    make_khasra("KHS-4", "KHT-2", kanal=3, marla=2, khasra_number="18//5/1", source=make_source(page=2, column_ref="6")),
+                    make_khasra("KHS-5", "KHT-2", marla=5, khasra_number="18//5/3", source=make_source(page=2, column_ref="6")),
+                    make_khasra("KHS-6", "KHT-2", marla=8, khasra_number="18//6/2", source=make_source(page=2, column_ref="6")),
+                ],
+            )
+        ],
+    )
+
+    page1 = make_document(khewats=[page1_khewat])
+    page2 = make_document(khewats=[page2_khewat])
+    merged = merge_page_documents([(2, page2), (1, page1)]).document
+
+    assert len(merged.khewats) == 1
+    merged_khewat = merged.khewats[0]
+    assert merged_khewat.khewat_number == "198/185"
+    assert [k.khatauni_number for k in merged_khewat.khataunis] == ["219", "220"]
+    assert len(merged_khewat.owners) == 1
+    assert merged_khewat.owners[0].raw_owner_name_parentage == "Chaman Lal s/o Dharampal s/o Sambhu Nath"
+    assert merged_khewat.owners[0].source.page_number == 1
+    assert merged_khewat.khataunis[1].source.page_number == 2
+
+    answer = FardQueryEngine(reconcile(merged, run_axiom_gates(merged))).owner_land("Chaman Lal s/o Dharampal s/o Sambhu Nath")
+    assert not answer.uncertain, answer.uncertainty_reason
+    assert "5 kanal 4 marla 4 sarsahi" in answer.calculated.lower()

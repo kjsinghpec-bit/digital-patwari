@@ -14,10 +14,12 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import sys
+from collections import Counter
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Iterable
+from typing import Any, Iterable
 
 from digital_patwari.models import (
     AreaKanalMarlaSarsahi,
@@ -450,13 +452,53 @@ def _resolve_input_paths(input_path: Path) -> list[Path]:
     raise FileNotFoundError(input_path)
 
 
+def _infer_page_number_from_payload(payload: dict[str, Any]) -> int | None:
+    if isinstance(payload.get("page_number"), int):
+        return payload["page_number"]
+
+    page_numbers: list[int] = []
+
+    def collect_values(value: Any) -> None:
+        if isinstance(value, dict):
+            if isinstance(value.get("page_number"), int):
+                page_numbers.append(value["page_number"])
+            for child in value.values():
+                collect_values(child)
+        elif isinstance(value, list):
+            for item in value:
+                collect_values(item)
+
+    collect_values(payload)
+    if not page_numbers:
+        return None
+
+    most_common, _ = Counter(page_numbers).most_common(1)[0]
+    return most_common
+
+
+def _page_number_from_filename(path: Path) -> int | None:
+    matches = re.findall(r"\d+", path.stem)
+    if not matches:
+        return None
+    return int(matches[-1])
+
+
 def _load_documents(input_paths: list[Path]) -> list[tuple[int, DigitalPatwariDocument]]:
     documents: list[tuple[int, DigitalPatwariDocument]] = []
     for path in sorted(input_paths):
         if path.name.endswith("validation.json"):
             continue
-        document = _load_document_from_json(path)
-        documents.append((len(documents) + 1, document))
+        payload = json.loads(path.read_text(encoding="utf-8"))
+        page_number = _infer_page_number_from_payload(payload)
+        if page_number is None:
+            page_number = _page_number_from_filename(path) or (len(documents) + 1)
+        # Allow page JSON files to include a top-level `page_number` for the
+        # merge harness without making the schema itself accept unknown root
+        # fields.
+        if isinstance(payload, dict) and "page_number" in payload:
+            payload = {k: v for k, v in payload.items() if k != "page_number"}
+        document = DigitalPatwariDocument.model_validate(payload)
+        documents.append((page_number, document))
     if not documents:
         raise ValueError("No valid DigitalPatwariDocument JSON files found in input path.")
     return documents
