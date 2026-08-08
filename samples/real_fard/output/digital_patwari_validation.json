@@ -1,0 +1,158 @@
+{
+  "passed": false,
+  "gates": [
+    {
+      "gate_id": "AG-01",
+      "passed": false,
+      "checked_entities": 4,
+      "skipped_entities": 3,
+      "issues": [
+        {
+          "gate_id": "AG-01",
+          "severity": "warning",
+          "message": "Share summation skipped: no owners extracted.",
+          "entity_type": "Khewat",
+          "entity_id": "KHW-2",
+          "expected": "184",
+          "actual": null,
+          "difference": null
+        },
+        {
+          "gate_id": "AG-01",
+          "severity": "warning",
+          "message": "Share summation skipped: no owners extracted.",
+          "entity_type": "Khewat",
+          "entity_id": "KHW-4",
+          "expected": "1",
+          "actual": null,
+          "difference": null
+        },
+        {
+          "gate_id": "AG-01",
+          "severity": "error",
+          "message": "Owner shares do not sum to Khewat total.",
+          "entity_type": "Khewat",
+          "entity_id": "KHW-6",
+          "expected": "1",
+          "actual": "2",
+          "difference": "1"
+        },
+        {
+          "gate_id": "AG-01",
+          "severity": "warning",
+          "message": "Share summation skipped: no owners extracted.",
+          "entity_type": "Khewat",
+          "entity_id": "KHW-7",
+          "expected": "1",
+          "actual": null,
+          "difference": null
+        }
+      ]
+    },
+    {
+      "gate_id": "AG-02",
+      "passed": false,
+      "checked_entities": 98,
+      "skipped_entities": 0,
+      "issues": [
+        {
+          "gate_id": "AG-02",
+          "severity": "error",
+          "message": "Remark.target_id does not resolve to an entity of its declared target_type.",
+          "entity_type": "Remark",
+          "entity_id": "KHW-310",
+          "expected": "existing Khewat",
+          "actual": "KHW-310",
+          "difference": null
+        },
+        {
+          "gate_id": "AG-02",
+          "severity": "error",
+          "message": "Mutation.target_id does not resolve to an entity of its declared target_type.",
+          "entity_type": "Mutation",
+          "entity_id": "KHW-310",
+          "expected": "existing Khewat",
+          "actual": "KHW-310",
+          "difference": null
+        }
+      ]
+    },
+    {
+      "gate_id": "AG-03",
+      "passed": true,
+      "checked_entities": 3,
+      "skipped_entities": 3,
+      "issues": [
+        {
+          "gate_id": "AG-03",
+          "severity": "warning",
+          "message": "Area consistency skipped (missing records or Khasras).",
+          "entity_type": "Khatauni",
+          "entity_id": "KHT-2",
+          "expected": null,
+          "actual": null,
+          "difference": null
+        },
+        {
+          "gate_id": "AG-03",
+          "severity": "warning",
+          "message": "Area consistency skipped (missing records or Khasras).",
+          "entity_type": "Khatauni",
+          "entity_id": "KHT-5",
+          "expected": null,
+          "actual": null,
+          "difference": null
+        },
+        {
+          "gate_id": "AG-03",
+          "severity": "warning",
+          "message": "Area consistency skipped (missing records or Khasras).",
+          "entity_type": "Khatauni",
+          "entity_id": "KHT-6",
+          "expected": null,
+          "actual": null,
+          "difference": null
+        }
+      ]
+    },
+    {
+      "gate_id": "AG-04",
+      "passed": true,
+      "checked_entities": 0,
+      "skipped_entities": 1,
+      "issues": [
+        {
+          "gate_id": "AG-04",
+          "severity": "warning",
+          "message": "Document completeness check skipped: no page states a total page count.",
+          "entity_type": "Document",
+          "entity_id": "ਸੰਘੋਲ",
+          "expected": null,
+          "actual": null,
+          "difference": null
+        }
+      ]
+    },
+    {
+      "gate_id": "AG-05",
+      "passed": true,
+      "checked_entities": 0,
+      "skipped_entities": 11,
+      "issues": []
+    },
+    {
+      "gate_id": "AG-06",
+      "passed": true,
+      "checked_entities": 8,
+      "skipped_entities": 0,
+      "issues": []
+    },
+    {
+      "gate_id": "AG-07",
+      "passed": true,
+      "checked_entities": 0,
+      "skipped_entities": 0,
+      "issues": []
+    }
+  ]
+}

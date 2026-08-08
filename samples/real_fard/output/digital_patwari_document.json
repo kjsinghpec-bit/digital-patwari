@@ -1,0 +1,2036 @@
+{
+  "schema_version": "1.0",
+  "document_header": {
+    "village": "ਸੰਘੋਲ",
+    "hadbast_number": "310",
+    "jamabandi_year": "2020-2021",
+    "lr_number": "LR26-18046550",
+    "district": "ਫਤਿਹਗੜ੍ਹ ਸਾਹਿਬ",
+    "tehsil": "ਖਮਾਣੋ",
+    "source": {
+      "page_number": 1,
+      "total_pages": null,
+      "column_ref": null,
+      "region": null,
+      "status": "present",
+      "confidence": "high",
+      "provenance": "machine_read",
+      "raw_text": null
+    }
+  },
+  "layout": "modern_8_column",
+  "khewats": [
+    {
+      "khewat_id": "KHW-1",
+      "khewat_number": "44",
+      "owner_group_ref": null,
+      "raw_total_share": "18.78",
+      "total_share": "1/1",
+      "owners": [
+        {
+          "owner_id": "OWN-1",
+          "khewat_id": "KHW-1",
+          "khatauni_id": null,
+          "raw_owner_name_parentage": "ਚਮਨ ਲਾਲ ਪੁੱਤਰ ਧਰਮਪਾਲ ਪੁੱਤਰ ਸੰਭੂ ਨਾਥ 23/551 ਦਿੱਸਾ",
+          "normalized_owner_name": null,
+          "raw_share_fraction": "23/551",
+          "share_fraction": "23/551",
+          "status": "present",
+          "source": null
+        },
+        {
+          "owner_id": "OWN-2",
+          "khewat_id": "KHW-1",
+          "khatauni_id": null,
+          "raw_owner_name_parentage": "ਰਾਣੀ ਪੁੱਤਰੀ ਰਾਮ ਪਸਾਿ 5/551 ਦਿੱਸਾ",
+          "normalized_owner_name": null,
+          "raw_share_fraction": "5/551",
+          "share_fraction": "5/551",
+          "status": "present",
+          "source": null
+        },
+        {
+          "owner_id": "OWN-3",
+          "khewat_id": "KHW-1",
+          "khatauni_id": null,
+          "raw_owner_name_parentage": "ਪਰਮਜੀਤ ਸਿੰਘ ਪੁੱਤਰ ਅਮਰ ਸਿੰਘ ਪੁੱਤਰ ਰਲਾ ਸਿੰਘ 523/1653 ਦਿੱਸਾ",
+          "normalized_owner_name": null,
+          "raw_share_fraction": "523/1653",
+          "share_fraction": "523/1653",
+          "status": "present",
+          "source": null
+        },
+        {
+          "owner_id": "OWN-4",
+          "khewat_id": "KHW-1",
+          "khatauni_id": null,
+          "raw_owner_name_parentage": "ਗੁਰਜੀਤ ਸਿੰਘ ਪੁੱਤਰ ਅਮਰ ਸਿੰਘ ਪੁੱਤਰ ਰਲਾ ਸਿੰਘ 523/1653 ਦਿੱਸਾ",
+          "normalized_owner_name": null,
+          "raw_share_fraction": "523/1653",
+          "share_fraction": "523/1653",
+          "status": "present",
+          "source": null
+        },
+        {
+          "owner_id": "OWN-5",
+          "khewat_id": "KHW-1",
+          "khatauni_id": null,
+          "raw_owner_name_parentage": "ਦਲਿੰਦਰ ਸਿੰਘ ਉਰਫ ਰਾਦਲਿੰਦਰ ਸਿੰਘ ਪੁੱਤਰ ਅਮਰ ਸਿੰਘ ਪੁੱਤਰ ਰਲਾ ਸਿੰਘ 523/1653 ਦਿੱਸਾ",
+          "normalized_owner_name": null,
+          "raw_share_fraction": "523/1653",
+          "share_fraction": "523/1653",
+          "status": "present",
+          "source": null
+        }
+      ],
+      "khataunis": [
+        {
+          "khatauni_id": "KHT-1",
+          "khatauni_number": "53",
+          "khewat_id": "KHW-1",
+          "raw_cultivator_name": "ਖੁਦਕਾਸ਼ਤ",
+          "raw_possession_type": "ਖੁਦਕਾਸ਼ਤ",
+          "raw_total_share": "1/1",
+          "total_share": "1/1",
+          "recorded_total_area": {
+            "kanal": 27,
+            "marla": 11,
+            "sarsahi": 0,
+            "raw_text": null,
+            "status": "present"
+          },
+          "khasras": [
+            {
+              "khasra_id": "KHS-1",
+              "khasra_number": "16/1",
+              "murabba_number": "30",
+              "khatauni_id": "KHT-1",
+              "area_kanal_marla": {
+                "kanal": 1,
+                "marla": 17,
+                "sarsahi": 0,
+                "raw_text": null,
+                "status": "present"
+              },
+              "raw_soil_classification": null,
+              "normalized_soil_classification": null,
+              "normalized_irrigation_source": "tubewell",
+              "normalized_cultivation_status": null,
+              "status": "present",
+              "source": null
+            },
+            {
+              "khasra_id": "KHS-2",
+              "khasra_number": "17/2",
+              "murabba_number": "31",
+              "khatauni_id": "KHT-1",
+              "area_kanal_marla": {
+                "kanal": 1,
+                "marla": 16,
+                "sarsahi": 0,
+                "raw_text": null,
+                "status": "present"
+              },
+              "raw_soil_classification": null,
+              "normalized_soil_classification": null,
+              "normalized_irrigation_source": "tubewell",
+              "normalized_cultivation_status": null,
+              "status": "present",
+              "source": null
+            },
+            {
+              "khasra_id": "KHS-3",
+              "khasra_number": "18",
+              "murabba_number": "31",
+              "khatauni_id": "KHT-1",
+              "area_kanal_marla": {
+                "kanal": 8,
+                "marla": 0,
+                "sarsahi": 0,
+                "raw_text": null,
+                "status": "present"
+              },
+              "raw_soil_classification": null,
+              "normalized_soil_classification": null,
+              "normalized_irrigation_source": "tubewell",
+              "normalized_cultivation_status": null,
+              "status": "present",
+              "source": null
+            },
+            {
+              "khasra_id": "KHS-4",
+              "khasra_number": "19",
+              "murabba_number": "31",
+              "khatauni_id": "KHT-1",
+              "area_kanal_marla": {
+                "kanal": 8,
+                "marla": 0,
+                "sarsahi": 0,
+                "raw_text": null,
+                "status": "present"
+              },
+              "raw_soil_classification": null,
+              "normalized_soil_classification": null,
+              "normalized_irrigation_source": "tubewell",
+              "normalized_cultivation_status": null,
+              "status": "present",
+              "source": null
+            },
+            {
+              "khasra_id": "KHS-5",
+              "khasra_number": "20",
+              "murabba_number": "31",
+              "khatauni_id": "KHT-1",
+              "area_kanal_marla": {
+                "kanal": 7,
+                "marla": 18,
+                "sarsahi": 0,
+                "raw_text": null,
+                "status": "present"
+              },
+              "raw_soil_classification": null,
+              "normalized_soil_classification": null,
+              "normalized_irrigation_source": "tubewell",
+              "normalized_cultivation_status": null,
+              "status": "present",
+              "source": null
+            }
+          ],
+          "source": null
+        }
+      ],
+      "source": null
+    },
+    {
+      "khewat_id": "KHW-2",
+      "khewat_number": "197",
+      "owner_group_ref": null,
+      "raw_total_share": "184",
+      "total_share": "184/1",
+      "owners": [],
+      "khataunis": [],
+      "source": {
+        "page_number": 1,
+        "total_pages": null,
+        "column_ref": "1",
+        "region": null,
+        "status": "present",
+        "confidence": "high",
+        "provenance": "machine_read",
+        "raw_text": null
+      }
+    },
+    {
+      "khewat_id": "KHW-3",
+      "khewat_number": "217",
+      "owner_group_ref": null,
+      "raw_total_share": "2222-90",
+      "total_share": "1/1",
+      "owners": [
+        {
+          "owner_id": "OWN-6",
+          "khewat_id": "KHW-3",
+          "khatauni_id": null,
+          "raw_owner_name_parentage": "ਚਮਨ ਲਾਲ ਪੁੱਤਰ ਧਰਮਪਾਲ ਪੁੱਤਰ ਸੰਭੂ ਨਾਥ",
+          "normalized_owner_name": null,
+          "raw_share_fraction": "1/7",
+          "share_fraction": "1/7",
+          "status": "present",
+          "source": null
+        },
+        {
+          "owner_id": "OWN-7",
+          "khewat_id": "KHW-3",
+          "khatauni_id": null,
+          "raw_owner_name_parentage": "ਚਰਨਜੀਤ ਕੌਰ ਪਤਨੀ ਅਮਰਜੀਤ ਸਿੰਘ ਪੁੱਤਰ ਨੰਦ ਲਾਲ",
+          "normalized_owner_name": null,
+          "raw_share_fraction": "1/14",
+          "share_fraction": "1/14",
+          "status": "present",
+          "source": null
+        },
+        {
+          "owner_id": "OWN-8",
+          "khewat_id": "KHW-3",
+          "khatauni_id": null,
+          "raw_owner_name_parentage": "ਰਕੇਸ ਕੁਮਾਰ ਪੁੱਤਰ ਰਾਮ ਲਾਲ ਪੁੱਤਰ ਰੋਣਕ ਰਾਮ",
+          "normalized_owner_name": null,
+          "raw_share_fraction": "1/14",
+          "share_fraction": "1/14",
+          "status": "present",
+          "source": null
+        },
+        {
+          "owner_id": "OWN-9",
+          "khewat_id": "KHW-3",
+          "khatauni_id": null,
+          "raw_owner_name_parentage": "ਜਸਵੀਰ ਸਿੰਘ ਪੁੱਤਰ ਲਾਭ ਸਿੰਘ ਪੁੱਤਰ ਛੋਟਾ ਸਿੰਘ",
+          "normalized_owner_name": null,
+          "raw_share_fraction": "1/70",
+          "share_fraction": "1/70",
+          "status": "present",
+          "source": null
+        },
+        {
+          "owner_id": "OWN-10",
+          "khewat_id": "KHW-3",
+          "khatauni_id": null,
+          "raw_owner_name_parentage": "ਬਲਕਾਰ ਸਿੰਘ ਪੁੱਤਰ ਲਾਭ ਸਿੰਘ ਪੁੱਤਰ ਛੋਟਾ ਸਿੰਘ",
+          "normalized_owner_name": null,
+          "raw_share_fraction": "1/70",
+          "share_fraction": "1/70",
+          "status": "present",
+          "source": null
+        },
+        {
+          "owner_id": "OWN-11",
+          "khewat_id": "KHW-3",
+          "khatauni_id": null,
+          "raw_owner_name_parentage": "ਅਮਰੀਕ ਸਿੰਘ ਪੁੱਤਰ ਲਾਭ ਸਿੰਘ ਪੁੱਤਰ ਛੋਟਾ ਸਿੰਘ",
+          "normalized_owner_name": null,
+          "raw_share_fraction": "1/70",
+          "share_fraction": "1/70",
+          "status": "present",
+          "source": null
+        },
+        {
+          "owner_id": "OWN-12",
+          "khewat_id": "KHW-3",
+          "khatauni_id": null,
+          "raw_owner_name_parentage": "ਸੁਖਵਿੰਦਰ ਕੌਰ ਪਤਨੀ ਜਸਵੀਰ ਸਿੰਘ ਪੁੱਤਰ ਢੇਰਾ ਸਿੰਘ",
+          "normalized_owner_name": null,
+          "raw_share_fraction": "5/14",
+          "share_fraction": "5/14",
+          "status": "present",
+          "source": null
+        },
+        {
+          "owner_id": "OWN-13",
+          "khewat_id": "KHW-3",
+          "khatauni_id": null,
+          "raw_owner_name_parentage": "ਕੁਲਵੀਰ ਸਿੰਘ ਪੁੱਤਰ ਲਾਭ ਸਿੰਘ ਪੁੱਤਰ ਛੋਟਾ ਸਿੰਘ",
+          "normalized_owner_name": null,
+          "raw_share_fraction": "1/70",
+          "share_fraction": "1/70",
+          "status": "present",
+          "source": null
+        },
+        {
+          "owner_id": "OWN-14",
+          "khewat_id": "KHW-3",
+          "khatauni_id": null,
+          "raw_owner_name_parentage": "ਹਰਜਿੰਦਰ ਸਿੰਘ ਪੁੱਤਰ ਚਰਨਜੀਤ ਸਿੰਘ ਪੁੱਤਰ ਲਾਭ ਸਿੰਘ",
+          "normalized_owner_name": null,
+          "raw_share_fraction": "1/140",
+          "share_fraction": "1/140",
+          "status": "present",
+          "source": null
+        },
+        {
+          "owner_id": "OWN-15",
+          "khewat_id": "KHW-3",
+          "khatauni_id": null,
+          "raw_owner_name_parentage": "ਜਗਵਿੰਦਰ ਸਿੰਘ ਪੁੱਤਰ ਚਰਨਜੀਤ ਸਿੰਘ ਪੁੱਤਰ ਲਾਭ ਸਿੰਘ",
+          "normalized_owner_name": null,
+          "raw_share_fraction": "1/140",
+          "share_fraction": "1/140",
+          "status": "present",
+          "source": null
+        },
+        {
+          "owner_id": "OWN-16",
+          "khewat_id": "KHW-3",
+          "khatauni_id": null,
+          "raw_owner_name_parentage": "ਹਰੀਸ ਕੁਮਾਰ ਪੁੱਤਰ ਜੀਵਨ ਲਾਲ ਪੁੱਤਰ ਧਰਮਪਾਲ",
+          "normalized_owner_name": null,
+          "raw_share_fraction": "1/7",
+          "share_fraction": "1/7",
+          "status": "present",
+          "source": null
+        },
+        {
+          "owner_id": "OWN-17",
+          "khewat_id": "KHW-3",
+          "khatauni_id": null,
+          "raw_owner_name_parentage": "ਮਨੀਸ ਕੁਮਾਰ ਪੁੱਤਰ ਜੀਵਨ ਲਾਲ ਪੁੱਤਰ ਧਰਮਪਾਲ",
+          "normalized_owner_name": null,
+          "raw_share_fraction": "1/7",
+          "share_fraction": "1/7",
+          "status": "present",
+          "source": null
+        }
+      ],
+      "khataunis": [
+        {
+          "khatauni_id": "KHT-2",
+          "khatauni_number": "217",
+          "khewat_id": "KHW-3",
+          "raw_cultivator_name": "ਮਕਬੂਜਾ ਮਾਲਕਾਨ",
+          "raw_possession_type": "ਮਕਬੂਜਾ ਮਾਲਕਾਨ",
+          "raw_total_share": "1/1",
+          "total_share": "1/1",
+          "recorded_total_area": null,
+          "khasras": [
+            {
+              "khasra_id": "KHS-6",
+              "khasra_number": "5/1",
+              "murabba_number": "23",
+              "khatauni_id": "KHT-2",
+              "area_kanal_marla": {
+                "kanal": 0,
+                "marla": 8,
+                "sarsahi": 0,
+                "raw_text": null,
+                "status": "present"
+              },
+              "raw_soil_classification": "ਗੈਰਮੁਮਕਿਨ",
+              "normalized_soil_classification": null,
+              "normalized_irrigation_source": null,
+              "normalized_cultivation_status": null,
+              "status": "present",
+              "source": null
+            }
+          ],
+          "source": null
+        }
+      ],
+      "source": null
+    },
+    {
+      "khewat_id": "KHW-4",
+      "khewat_number": "1",
+      "owner_group_ref": null,
+      "raw_total_share": "1",
+      "total_share": "1/1",
+      "owners": [],
+      "khataunis": [
+        {
+          "khatauni_id": "KHT-3",
+          "khatauni_number": "218",
+          "khewat_id": "KHW-4",
+          "raw_cultivator_name": "ਪਰਦਮੰਿਰ ਦਸੰਘ ਐਡ ਕੰਪਨੀ ਮਕਬੂਟਾ",
+          "raw_possession_type": "ਮਕਬੂਟਾ",
+          "raw_total_share": "1/1",
+          "total_share": "1/1",
+          "recorded_total_area": {
+            "kanal": 0,
+            "marla": 6,
+            "sarsahi": 0,
+            "raw_text": null,
+            "status": "present"
+          },
+          "khasras": [
+            {
+              "khasra_id": "KHS-7",
+              "khasra_number": "5/1",
+              "murabba_number": "23",
+              "khatauni_id": "KHT-3",
+              "area_kanal_marla": {
+                "kanal": 0,
+                "marla": 6,
+                "sarsahi": 0,
+                "raw_text": null,
+                "status": "present"
+              },
+              "raw_soil_classification": null,
+              "normalized_soil_classification": "ਗੈਰਮੁਮਦਕਨ",
+              "normalized_irrigation_source": "23",
+              "normalized_cultivation_status": null,
+              "status": "present",
+              "source": null
+            }
+          ],
+          "source": {
+            "page_number": 1,
+            "total_pages": null,
+            "column_ref": null,
+            "region": null,
+            "status": "present",
+            "confidence": "high",
+            "provenance": "machine_read",
+            "raw_text": null
+          }
+        }
+      ],
+      "source": {
+        "page_number": 1,
+        "total_pages": null,
+        "column_ref": null,
+        "region": null,
+        "status": "present",
+        "confidence": "high",
+        "provenance": "machine_read",
+        "raw_text": null
+      }
+    },
+    {
+      "khewat_id": "KHW-5",
+      "khewat_number": "219",
+      "owner_group_ref": null,
+      "raw_total_share": "1",
+      "total_share": "1/1",
+      "owners": [
+        {
+          "owner_id": "OWN-18",
+          "khewat_id": "KHW-5",
+          "khatauni_id": null,
+          "raw_owner_name_parentage": "ਬੋਤ ਨਾਥ ਉਰਫ ਬੋਤ ਪੁੱਤਰ ਕਪੂਰ ਚੰਦ ਪੁੱਤਰ ਸੰਭੂ ਨਾਥ",
+          "normalized_owner_name": null,
+          "raw_share_fraction": "28/177",
+          "share_fraction": "28/177",
+          "status": "present",
+          "source": null
+        },
+        {
+          "owner_id": "OWN-19",
+          "khewat_id": "KHW-5",
+          "khatauni_id": null,
+          "raw_owner_name_parentage": "ਅਸੋਕ ਕੁਮਾਰ ਪੁੱਤਰ ਕਪੂਰ ਚੰਦ ਪੁੱਤਰ ਸੰਭੂ ਨਾਥ",
+          "normalized_owner_name": null,
+          "raw_share_fraction": "28/177",
+          "share_fraction": "28/177",
+          "status": "present",
+          "source": null
+        },
+        {
+          "owner_id": "OWN-20",
+          "khewat_id": "KHW-5",
+          "khatauni_id": null,
+          "raw_owner_name_parentage": "ਚਮਨ ਲਾਲ ਪੁੱਤਰ ਧਰਮਪਾਲ ਪੁੱਤਰ ਸੰਭੂ ਨਾਥ",
+          "normalized_owner_name": null,
+          "raw_share_fraction": "209/944",
+          "share_fraction": "209/944",
+          "status": "present",
+          "source": null
+        },
+        {
+          "owner_id": "OWN-21",
+          "khewat_id": "KHW-5",
+          "khatauni_id": null,
+          "raw_owner_name_parentage": "ਰਕੇਸ ਕੁਮਾਰ ਪੁੱਤਰ ਰਾਮ ਲਾਲ ਪੁੱਤਰ ਰੋਣਕ ਰਾਮ",
+          "normalized_owner_name": null,
+          "raw_share_fraction": "27/944",
+          "share_fraction": "27/944",
+          "status": "present",
+          "source": null
+        },
+        {
+          "owner_id": "OWN-22",
+          "khewat_id": "KHW-5",
+          "khatauni_id": null,
+          "raw_owner_name_parentage": "ਤਸਵੀਰ ਸਿੰਘ ਪੁੱਤਰ ਲਾਭ ਸਿੰਘ ਪੁੱਤਰ ਛੋਟਾ ਸਿੰਘ",
+          "normalized_owner_name": null,
+          "raw_share_fraction": "1/295",
+          "share_fraction": "1/295",
+          "status": "present",
+          "source": null
+        },
+        {
+          "owner_id": "OWN-23",
+          "khewat_id": "KHW-5",
+          "khatauni_id": null,
+          "raw_owner_name_parentage": "ਬਲਕਾਰ ਸਿੰਘ ਪੁੱਤਰ ਲਾਭ ਸਿੰਘ ਪੁੱਤਰ ਛੋਟਾ ਸਿੰਘ",
+          "normalized_owner_name": null,
+          "raw_share_fraction": "1/295",
+          "share_fraction": "1/295",
+          "status": "present",
+          "source": null
+        },
+        {
+          "owner_id": "OWN-24",
+          "khewat_id": "KHW-5",
+          "khatauni_id": null,
+          "raw_owner_name_parentage": "ਅਮਰੀਕ ਸਿੰਘ ਪੁੱਤਰ ਲਾਭ ਸਿੰਘ ਪੁੱਤਰ ਛੋਟਾ ਸਿੰਘ",
+          "normalized_owner_name": null,
+          "raw_share_fraction": "1/295",
+          "share_fraction": "1/295",
+          "status": "present",
+          "source": null
+        },
+        {
+          "owner_id": "OWN-25",
+          "khewat_id": "KHW-5",
+          "khatauni_id": null,
+          "raw_owner_name_parentage": "ਕੁਲਵੀਰ ਸਿੰਘ ਪੁੱਤਰ ਲਾਭ ਸਿੰਘ ਪੁੱਤਰ ਛੋਟਾ ਸਿੰਘ",
+          "normalized_owner_name": null,
+          "raw_share_fraction": "1/295",
+          "share_fraction": "1/295",
+          "status": "present",
+          "source": null
+        },
+        {
+          "owner_id": "OWN-26",
+          "khewat_id": "KHW-5",
+          "khatauni_id": null,
+          "raw_owner_name_parentage": "ਦਵਿੰਦਰ ਸਿੰਘ ਪੁੱਤਰ ਦਰਭਜਨ ਸਿੰਘ ਪੁੱਤਰ ਰੱਖਾ ਸਿੰਘ",
+          "normalized_owner_name": null,
+          "raw_share_fraction": "1/118",
+          "share_fraction": "1/118",
+          "status": "present",
+          "source": null
+        },
+        {
+          "owner_id": "OWN-27",
+          "khewat_id": "KHW-5",
+          "khatauni_id": null,
+          "raw_owner_name_parentage": "ਦਵਿਪਨ ਕੁਮਾਰ ਪੁੱਤਰ ਕਪੂਰ ਚੰਦ ਪੁੱਤਰ ਸੰਭੂ ਨਾਥ",
+          "normalized_owner_name": null,
+          "raw_share_fraction": "28/177",
+          "share_fraction": "28/177",
+          "status": "present",
+          "source": null
+        },
+        {
+          "owner_id": "OWN-28",
+          "khewat_id": "KHW-5",
+          "khatauni_id": null,
+          "raw_owner_name_parentage": "ਦਵਿੰਦਰ ਸਿੰਘ ਪੁੱਤਰ ਚਰਨਜੀਤ ਸਿੰਘ ਪੁੱਤਰ ਲਾਭ ਸਿੰਘ",
+          "normalized_owner_name": null,
+          "raw_share_fraction": "1/590",
+          "share_fraction": "1/590",
+          "status": "present",
+          "source": null
+        },
+        {
+          "owner_id": "OWN-29",
+          "khewat_id": "KHW-5",
+          "khatauni_id": null,
+          "raw_owner_name_parentage": "ਗਗਨਵਿੰਦਰ ਸਿੰਘ ਪੁੱਤਰ ਚਰਨਜੀਤ ਸਿੰਘ ਪੁੱਤਰ ਲਾਭ ਸਿੰਘ",
+          "normalized_owner_name": null,
+          "raw_share_fraction": "1/590",
+          "share_fraction": "1/590",
+          "status": "present",
+          "source": null
+        },
+        {
+          "owner_id": "OWN-30",
+          "khewat_id": "KHW-5",
+          "khatauni_id": null,
+          "raw_owner_name_parentage": "ਹਰੀਸ ਕੁਮਾਰ ਪੁੱਤਰ ਜੀਵਨ ਲਾਲ ਪੁੱਤਰ ਧਰਮਪਾਲ",
+          "normalized_owner_name": null,
+          "raw_share_fraction": "1/8",
+          "share_fraction": "1/8",
+          "status": "present",
+          "source": null
+        },
+        {
+          "owner_id": "OWN-31",
+          "khewat_id": "KHW-5",
+          "khatauni_id": null,
+          "raw_owner_name_parentage": "ਮਨੀਸ ਕੁਮਾਰ ਪੁੱਤਰ ਜੀਵਨ ਲਾਲ ਪੁੱਤਰ ਧਰਮਪਾਲ",
+          "normalized_owner_name": null,
+          "raw_share_fraction": "1/8",
+          "share_fraction": "1/8",
+          "status": "present",
+          "source": null
+        }
+      ],
+      "khataunis": [
+        {
+          "khatauni_id": "KHT-4",
+          "khatauni_number": "219",
+          "khewat_id": "KHW-5",
+          "raw_cultivator_name": "ਮੁਸ਼ਤਰੀਆਨ ਮਕਬੂਜਾ ਮੁਸ਼ਤਰੀਆਨ",
+          "raw_possession_type": "ਮੁਸ਼ਤਰੀਆਨ",
+          "raw_total_share": "1/1",
+          "total_share": "1/1",
+          "recorded_total_area": {
+            "kanal": 11,
+            "marla": 17,
+            "sarsahi": 0,
+            "raw_text": "11 ਕਨਾਲ 17 ਮਰਲਾ",
+            "status": "present"
+          },
+          "khasras": [
+            {
+              "khasra_id": "KHS-8",
+              "khasra_number": "5/2",
+              "murabba_number": "18",
+              "khatauni_id": "KHT-4",
+              "area_kanal_marla": {
+                "kanal": 4,
+                "marla": 13,
+                "sarsahi": 0,
+                "raw_text": "4-13",
+                "status": "present"
+              },
+              "raw_soil_classification": null,
+              "normalized_soil_classification": "ਗੈਰਮੁਮਕਿਨ",
+              "normalized_irrigation_source": null,
+              "normalized_cultivation_status": null,
+              "status": "present",
+              "source": null
+            },
+            {
+              "khasra_id": "KHS-9",
+              "khasra_number": "6/1",
+              "murabba_number": "18",
+              "khatauni_id": "KHT-4",
+              "area_kanal_marla": {
+                "kanal": 7,
+                "marla": 4,
+                "sarsahi": 0,
+                "raw_text": "7-4",
+                "status": "present"
+              },
+              "raw_soil_classification": null,
+              "normalized_soil_classification": "ਗੈਰਮੁਮਕਿਨ",
+              "normalized_irrigation_source": null,
+              "normalized_cultivation_status": null,
+              "status": "present",
+              "source": null
+            }
+          ],
+          "source": null
+        }
+      ],
+      "source": null
+    },
+    {
+      "khewat_id": "KHW-6",
+      "khewat_number": "220",
+      "owner_group_ref": null,
+      "raw_total_share": "1/3 + 1/3 + 1/3 + 1/2 + 1/2",
+      "total_share": "1/1",
+      "owners": [
+        {
+          "owner_id": "OWN-32",
+          "khewat_id": "KHW-6",
+          "khatauni_id": null,
+          "raw_owner_name_parentage": "ਅਸੋਕ ਕੁਮਾਰ ਪੁੱਤਰ ਕਪੂਰ ਚੰਦ ਪੁੱਤਰ ਸੰਭੂ ਨਾਥ",
+          "normalized_owner_name": null,
+          "raw_share_fraction": "1/3",
+          "share_fraction": "1/3",
+          "status": "present",
+          "source": null
+        },
+        {
+          "owner_id": "OWN-33",
+          "khewat_id": "KHW-6",
+          "khatauni_id": null,
+          "raw_owner_name_parentage": "ਦਵਪਨ ਕੁਮਾਰ ਪੁੱਤਰ ਕਪੂਰ ਚੰਦ ਪੁੱਤਰ ਸੰਭੂ ਨਾਥ",
+          "normalized_owner_name": null,
+          "raw_share_fraction": "1/3",
+          "share_fraction": "1/3",
+          "status": "present",
+          "source": null
+        },
+        {
+          "owner_id": "OWN-34",
+          "khewat_id": "KHW-6",
+          "khatauni_id": null,
+          "raw_owner_name_parentage": "ਬੋਤ ਨਾਥ ਉਰਫ ਬੋਤ ਪੁੱਤਰ ਕਪੂਰ ਚੰਦ ਪੁੱਤਰ ਸੰਭੂ ਨਾਥ",
+          "normalized_owner_name": null,
+          "raw_share_fraction": "1/3",
+          "share_fraction": "1/3",
+          "status": "present",
+          "source": null
+        },
+        {
+          "owner_id": "OWN-35",
+          "khewat_id": "KHW-6",
+          "khatauni_id": null,
+          "raw_owner_name_parentage": "ਦਿੱਸੇਦਾਰਾਨ ਬਾਇਆਨ ਰਣਜੀਤ ਸਿੰਘ ਚੀਮਾ ਪੁੱਤਰ ਨੇਤਰ ਸਿੰਘ ਪੁੱਤਰ ਅਰਜਨ ਸਿੰਘ",
+          "normalized_owner_name": null,
+          "raw_share_fraction": "1/2",
+          "share_fraction": "1/2",
+          "status": "present",
+          "source": null
+        },
+        {
+          "owner_id": "OWN-36",
+          "khewat_id": "KHW-6",
+          "khatauni_id": null,
+          "raw_owner_name_parentage": "ਜਸਵਿੰਦਰ ਸਿੰਘ ਚੀਮਾ ਪੁੱਤਰ ਨੇਤਰ ਸਿੰਘ ਪੁੱਤਰ ਅਰਜਨ ਸਿੰਘ",
+          "normalized_owner_name": null,
+          "raw_share_fraction": "1/2",
+          "share_fraction": "1/2",
+          "status": "present",
+          "source": null
+        }
+      ],
+      "khataunis": [
+        {
+          "khatauni_id": "KHT-5",
+          "khatauni_number": "220",
+          "khewat_id": "KHW-6",
+          "raw_cultivator_name": "ਮੁਸ਼ਤਰੀਆਨ ਕਾਸ਼ਤ ਮੁਸ਼ਤਰੀ",
+          "raw_possession_type": null,
+          "raw_total_share": "1/1",
+          "total_share": "1/1",
+          "recorded_total_area": null,
+          "khasras": [
+            {
+              "khasra_id": "KHS-10",
+              "khasra_number": "25",
+              "murabba_number": "8",
+              "khatauni_id": "KHT-5",
+              "area_kanal_marla": {
+                "kanal": 8,
+                "marla": 0,
+                "sarsahi": 0,
+                "raw_text": "8-0",
+                "status": "present"
+              },
+              "raw_soil_classification": null,
+              "normalized_soil_classification": "ਚਾਹੀ",
+              "normalized_irrigation_source": null,
+              "normalized_cultivation_status": null,
+              "status": "present",
+              "source": null
+            },
+            {
+              "khasra_id": "KHS-11",
+              "khasra_number": "5/1",
+              "murabba_number": "18",
+              "khatauni_id": "KHT-5",
+              "area_kanal_marla": {
+                "kanal": 3,
+                "marla": 2,
+                "sarsahi": 0,
+                "raw_text": "3-2",
+                "status": "present"
+              },
+              "raw_soil_classification": null,
+              "normalized_soil_classification": "ਗੈਰਮੁਮਕਿਨ",
+              "normalized_irrigation_source": null,
+              "normalized_cultivation_status": null,
+              "status": "present",
+              "source": null
+            },
+            {
+              "khasra_id": "KHS-12",
+              "khasra_number": "5/3",
+              "murabba_number": "18",
+              "khatauni_id": "KHT-5",
+              "area_kanal_marla": {
+                "kanal": 0,
+                "marla": 5,
+                "sarsahi": 0,
+                "raw_text": "0-5",
+                "status": "present"
+              },
+              "raw_soil_classification": null,
+              "normalized_soil_classification": "ਗੈਰਮੁਮਕਿਨ",
+              "normalized_irrigation_source": null,
+              "normalized_cultivation_status": null,
+              "status": "present",
+              "source": null
+            },
+            {
+              "khasra_id": "KHS-13",
+              "khasra_number": "6/2",
+              "murabba_number": "18",
+              "khatauni_id": "KHT-5",
+              "area_kanal_marla": {
+                "kanal": 0,
+                "marla": 8,
+                "sarsahi": 0,
+                "raw_text": "0-8",
+                "status": "present"
+              },
+              "raw_soil_classification": null,
+              "normalized_soil_classification": "ਗੈਰਮੁਮਕਿਨ",
+              "normalized_irrigation_source": null,
+              "normalized_cultivation_status": null,
+              "status": "present",
+              "source": null
+            }
+          ],
+          "source": null
+        }
+      ],
+      "source": null
+    },
+    {
+      "khewat_id": "KHW-7",
+      "khewat_number": "6",
+      "owner_group_ref": null,
+      "raw_total_share": "1/1",
+      "total_share": "1/1",
+      "owners": [],
+      "khataunis": [
+        {
+          "khatauni_id": "KHT-6",
+          "khatauni_number": "6",
+          "khewat_id": "KHW-7",
+          "raw_cultivator_name": null,
+          "raw_possession_type": null,
+          "raw_total_share": "1/1",
+          "total_share": "1/1",
+          "recorded_total_area": null,
+          "khasras": [],
+          "source": {
+            "page_number": 1,
+            "total_pages": null,
+            "column_ref": null,
+            "region": null,
+            "status": "present",
+            "confidence": "high",
+            "provenance": "machine_read",
+            "raw_text": null
+          }
+        }
+      ],
+      "source": {
+        "page_number": 1,
+        "total_pages": null,
+        "column_ref": null,
+        "region": null,
+        "status": "present",
+        "confidence": "high",
+        "provenance": "machine_read",
+        "raw_text": null
+      }
+    }
+  ],
+  "remarks": [
+    {
+      "target_type": "Khewat",
+      "target_id": "KHW-1",
+      "remark_category": "Informational",
+      "raw_text": "ਰਪਿ ਨੰ 189 ਆٟ ਰਦਿਨ ਦਮਤੀ 6/2/2021",
+      "parsed_meaning": null,
+      "source": {
+        "page_number": 1,
+        "total_pages": null,
+        "column_ref": "8",
+        "region": null,
+        "status": "present",
+        "confidence": "high",
+        "provenance": "machine_read",
+        "raw_text": null
+      }
+    },
+    {
+      "target_type": "Khewat",
+      "target_id": "KHW-1",
+      "remark_category": "Legal_Encumbrance",
+      "raw_text": "ਿਫਤਰੀ ਨੰਬਰ 353 ਦਮਤੀ 29/1/2021 ਵਲੋ ਪਰਮطੀਤ ਦਸੰਘ ਪੁੱਤਰ ਅਮਰ ਦਸੰਘ ਨੇ ਰਾਿੀ ਖੇਵਿ ਨੰਬਰ 44/49 ਨੰਬਰ ਖਸਰਾ 30//16/1(1-17) 31//17/2(1-16) 19(8-0) 20(7-18) ਰਕਬਾ 19-11 ਿਾ 123/391 ਦਿਸਾ ਬਕਿਰ 6-3 ਵਾ ਖੇਵਿ ਨੰਬਰ 177/196 ਨੰਬਰ ਖਸਰਾ 14//7/4(1-14) 8(2-7) 9(0-4) 12(6-5) 13/1(5-14) 14/1(0-1) 18/4(0-12) 19/2(3-6) 23(8-0) 27//3/2(6-12) ਰਕਬਾ 34-15 ਿਾ 86/695 ਦਿਸਾ ਬਕਿਰ 4-6 ਕੁਲ ਰਕਬਾ 10-9 ਮਏ ਿੀਗਰ ਈਰਾطੀ ਰਕਬਾ 12-13 ਦਪੰਡ ਰਾਣਵਾ ਿੋਨਾ ਦਪੰਡਾ ਿਾ ਕੁਲ ਰਕਬਾ 23-2 ਬਿਲੇ 8,10,000/- ਰੁਪਏ ਬਾਿੱਕ ਐਚ ਡੀ ਐਫ ਸੀ ਬੈਕ ਬਰਾਚ ਖਮਾਣੋ ਪਾਸ ਆٟ ਰਦਿਨ ਿੈ।",
+      "parsed_meaning": null,
+      "source": {
+        "page_number": 1,
+        "total_pages": null,
+        "column_ref": "8",
+        "region": null,
+        "status": "present",
+        "confidence": "high",
+        "provenance": "machine_read",
+        "raw_text": null
+      }
+    },
+    {
+      "target_type": "Khewat",
+      "target_id": "KHW-1",
+      "remark_category": "Informational",
+      "raw_text": "212 ਕੁਰ ਕਰਨਆ ਦਮਤੀ 30/1/2006 ਕੁਰਕੀ ਵਲੋ ਬਨਾਮ ਪੁਰੀ ਆਇਲ ਦਮਲ ਚਮਨ ਲਾਲ ਸੁਖਿੇਵ ਕੁਮਾਰਸੁਰطੀਤ ਕੁਮਾਰ ਦਿਸੇ ਤੇ ਸੇਿਆ ਿੋ ਚੁੱਕੀ ਿੈ।",
+      "parsed_meaning": null,
+      "source": {
+        "page_number": 1,
+        "total_pages": null,
+        "column_ref": "8",
+        "region": null,
+        "status": "present",
+        "confidence": "high",
+        "provenance": "machine_read",
+        "raw_text": null
+      }
+    },
+    {
+      "target_type": "Khewat",
+      "target_id": "KHW-1",
+      "remark_category": "Informational",
+      "raw_text": "212- ਕੁਰ ਕਰਨਆ ਦਮਤੀ 30/1/2006 ਕਾਰਵਾਈ ਕੁਰਕੀ ਦਿਸਾ ਚਮਨ ਲਾਲ ਦਿਸੇਿਾਰ",
+      "parsed_meaning": null,
+      "source": {
+        "page_number": 1,
+        "total_pages": null,
+        "column_ref": "8",
+        "region": null,
+        "status": "present",
+        "confidence": "high",
+        "provenance": "machine_read",
+        "raw_text": null
+      }
+    },
+    {
+      "target_type": "Khewat",
+      "target_id": "KHW-1",
+      "remark_category": "Informational",
+      "raw_text": "286 ਫੱਕ ਆٟ ਰਦਿਨ ਦਮਤੀ 7/5/2019 ਰਾਿੀ ਰਪਿ ਨੰਬਰ 166 ਦਮਤੀ 15/12/2010 ਫੱਕ ਿੋ ਚੁੱਕੀ ਿੈ।",
+      "parsed_meaning": null,
+      "source": {
+        "page_number": 1,
+        "total_pages": null,
+        "column_ref": "8",
+        "region": null,
+        "status": "present",
+        "confidence": "high",
+        "provenance": "machine_read",
+        "raw_text": null
+      }
+    },
+    {
+      "target_type": "Khewat",
+      "target_id": "KHW-2",
+      "remark_category": "Legal_Encumbrance",
+      "raw_text": "ਬਰੁਏ ਰਪਿ ਨੰ 211 ਆٟ ਰਦਿਨ ਦਮਤੀ 24/2/2022 ਿਫਤਰੀ ਨੰਬਰ 342 ਦਮਤੀ 3/2/2022 ਵਲੋ ਪਰਮطੀਤ ਦਸੰਘ ਪੁੱਤਰ ਅਮਰ ਦਸੰਘ ਨੇ ਰਾਿੀ ਖੇਵਿ ਨੰਬਰ 44/49 ਨੰਬਰ ਖਸਰਾ 31//18(8-0) ਿਾ 1/4 ਦਿਸਾ ਬਕਿਰ 2-0 ਵਾ ਖੇਵਿ ਨੰਬਰ 115/130 ਨੰਬਰ ਖਸਰਾ 30//25/2/1(2-17) 31//21/1(0-8) ਰਕਬਾ 3-5 ਿਾ 20/65 ਦਿਸਾ ਬਕਿਰ 1-0 ਵਾ ਖੇਵਿ ਨੰਬਰ 117/132 ਨੰਬਰ ਖਸਰਾ 31//17/1/1(2-8) 18/1(1-0) 21/1(7-12) ਰਕਬਾ 11-0 ਿਾ 20/220 ਦਿਸਾ ਬਕਿਰ 1-0 ਕੁਲ ਰਕਬਾ 4-0 ਮਏ ਿੀਗਰ ਇਰਾطੀ ਰਕਬਾ 20-0 ਦਪੰਡ ਰਾਣਵਾ ਿੋਨਾ ਦਪੰਡਾ ਿਾ ਕੁਲ ਰਕਬਾ 24-0 ਬਿਲੇ 9,58,000/- ਰੁਪਏ ਬਾਿੱਕ ਐਚ ਡੀ ਐਫ ਸੀ ਬੈਕ ਬਰਾਚ ਖਮਾਣੋ ਪਾਸ ਆٟ ਰਦਿਨ ਿੋ ਚੁੱਕੀ ਿੈ।",
+      "parsed_meaning": "Mortgage entry 211 dated 24/2/2022, mutation 342 dated 3/2/2022 by Paramjit Singh son of Amar Singh for Khewat 44/49, 115/130, 117/132 for a total of 9,58,000 rupees to HDFC Bank, Khamano branch.",
+      "source": {
+        "page_number": 1,
+        "total_pages": null,
+        "column_ref": "8",
+        "region": null,
+        "status": "present",
+        "confidence": "high",
+        "provenance": "machine_read",
+        "raw_text": null
+      }
+    },
+    {
+      "target_type": "Khewat",
+      "target_id": "KHW-2",
+      "remark_category": "Approved_Mutation",
+      "raw_text": "ਬਰੁਏ ਰਪਿ ਨੰ 254 ਫੱਕ ਆٟ ਰਦਿਨ ਦਮਤੀ 4/4/2022 ਰਾਿੀ ਰਪਿ ਨੰਬਰ 189 ਦਮਤੀ 6/2/2021 ਫੱਕ ਿੋ ਚੁੱਕੀ ਿੈ।",
+      "parsed_meaning": "Mutation 254 dated 4/4/2022, release of mortgage 189 dated 6/2/2021.",
+      "source": {
+        "page_number": 1,
+        "total_pages": null,
+        "column_ref": "8",
+        "region": null,
+        "status": "present",
+        "confidence": "high",
+        "provenance": "machine_read",
+        "raw_text": null
+      }
+    },
+    {
+      "target_type": "Khewat",
+      "target_id": "KHW-3",
+      "remark_category": "Informational",
+      "raw_text": "ਰਪਿ ਨੰਬਰ25 ਸਿੇਆ ਵਲੋ ਕੁਮਾਰ ਚੰਿ ਬਥਾਮ ਚਮਮ ਲਾਲ ਵਾ ਰਕੇਸ ਕੁਮਾਰ ਿੇ ਦਿਸੇ ਤੇ ਸਿੇਿ ਿੋ ਚੁੱਕੀ ਿੈ।",
+      "parsed_meaning": null,
+      "source": {
+        "page_number": 1,
+        "total_pages": null,
+        "column_ref": "8",
+        "region": null,
+        "status": "present",
+        "confidence": "medium",
+        "provenance": "machine_read",
+        "raw_text": null
+      }
+    },
+    {
+      "target_type": "Khewat",
+      "target_id": "KHW-3",
+      "remark_category": "Informational",
+      "raw_text": "ਵਲੋ ਿੀਨਾ ਰਾਣੀ ਬਨਾਮ ਚਮਲ ਲਾਲ ਸਿੇਿ ਿੋ ਚੁੱਕੀ ਿੈ",
+      "parsed_meaning": null,
+      "source": {
+        "page_number": 1,
+        "total_pages": null,
+        "column_ref": "8",
+        "region": null,
+        "status": "present",
+        "confidence": "medium",
+        "provenance": "machine_read",
+        "raw_text": null
+      }
+    },
+    {
+      "target_type": "Khewat",
+      "target_id": "KHW-3",
+      "remark_category": "Legal_Encumbrance",
+      "raw_text": "ਅਫਸਰ ਫਦਤਿਗٟ ਸਾਦਿਬ ਵਲੋ طੀਵਨ ਲਾਲ ਿੀ ਦਿਮਾਿੀ ਕੁਰਕੀ ਿੋ ਚੁੱਕੀ ਿੈ।",
+      "parsed_meaning": null,
+      "source": {
+        "page_number": 1,
+        "total_pages": null,
+        "column_ref": "8",
+        "region": null,
+        "status": "present",
+        "confidence": "medium",
+        "provenance": "machine_read",
+        "raw_text": null
+      }
+    },
+    {
+      "target_type": "Khewat",
+      "target_id": "KHW-3",
+      "remark_category": "Pending_Mutation",
+      "raw_text": "ਬਰੁਏ ਰਪਿ ਨੰ 422- ਸਰਕਾਰੀ ਿੁਕਮ ਦਮਤੀ 16/8/2021 ਤਸੀਿ ਰਪਿ ਨੰਬਰ 422 ਦਮਤੀ 16/8/2021 ਰਾਿੀ ਪਦਿਲਾ ਰਪਿ ਨੰਬਰ 364 ਦਮਤੀ 23/6/2015 ਦਪੰਡ ਸੰਘੋਲ ਦਵਚ ਚਾਰ ਮਾਰਗੀ ਸٟਕ ਬਣਾਉਣ ਸੰਬੰਧੀ ਨੋਿੀਦਫਕੇਸ਼ਨ 3D ਦਮਤੀ 28/1/2015 ਨੂੰ ਿੋ ਚੁੱਕਾ ਿੈ। ਿੇਠ ਦਲਖੇ ਨੰਬਰ ਖਸਰਾ ਦਵਚ ਕੋਈ ਤਬਿੀਲੀ ਨਿੀ ਿੋ ਸਕਿੀ।",
+      "parsed_meaning": null,
+      "source": {
+        "page_number": 1,
+        "total_pages": null,
+        "column_ref": "8",
+        "region": null,
+        "status": "present",
+        "confidence": "medium",
+        "provenance": "machine_read",
+        "raw_text": null
+      }
+    },
+    {
+      "target_type": "Khewat",
+      "target_id": "KHW-5",
+      "remark_category": "Informational",
+      "raw_text": "ਇੰਤਕਾਲ ਨੰ 7572- ਬੈ 7577 ਬੈ 7663 ਬੈ 7676 ਵਰਾਸਤ 7714 ਬੈ 7715 ਬੈ 7717 ਬੈ 7688 ਵਰਾਸਤ 7768 ਬੈ 7769 ਬੈ 7784 ਬੈ",
+      "parsed_meaning": null,
+      "source": {
+        "page_number": 1,
+        "total_pages": null,
+        "column_ref": "8",
+        "region": null,
+        "status": "present",
+        "confidence": "medium",
+        "provenance": "machine_read",
+        "raw_text": null
+      }
+    },
+    {
+      "target_type": "Khewat",
+      "target_id": "KHW-5",
+      "remark_category": "Informational",
+      "raw_text": "ਰਪਿ ਨੰ 212 ਆٟ ਰਦਿਨ ਦਮਤੀ 30/1/2006",
+      "parsed_meaning": null,
+      "source": {
+        "page_number": 1,
+        "total_pages": null,
+        "column_ref": "8",
+        "region": null,
+        "status": "present",
+        "confidence": "medium",
+        "provenance": "machine_read",
+        "raw_text": null
+      }
+    },
+    {
+      "target_type": "Khewat",
+      "target_id": "KHW-5",
+      "remark_category": "Informational",
+      "raw_text": "ਕਾਰਵਾਈ ਕੁਰਕੀ ਦਿਸਾ ਚਮਨ ਲਾਲ ਦਿਸੇਿਾਰ",
+      "parsed_meaning": null,
+      "source": {
+        "page_number": 1,
+        "total_pages": null,
+        "column_ref": "8",
+        "region": null,
+        "status": "present",
+        "confidence": "medium",
+        "provenance": "machine_read",
+        "raw_text": null
+      }
+    },
+    {
+      "target_type": "Khewat",
+      "target_id": "KHW-5",
+      "remark_category": "Informational",
+      "raw_text": "ਚਮਲ ਲਾਲ ਤੇ ਕਰੇਸ ਕੁਮਾਰ ਿੇ ਦਿਸੇ ਤੇ ਸਿੇਆ ਿੋ ਚੁੱਕੀ ਿੈ",
+      "parsed_meaning": null,
+      "source": {
+        "page_number": 1,
+        "total_pages": null,
+        "column_ref": "8",
+        "region": null,
+        "status": "present",
+        "confidence": "medium",
+        "provenance": "machine_read",
+        "raw_text": null
+      }
+    },
+    {
+      "target_type": "Khewat",
+      "target_id": "KHW-5",
+      "remark_category": "Informational",
+      "raw_text": "ਿਵਾਲਾ ਦਮਤੀ 9/12/2019",
+      "parsed_meaning": null,
+      "source": {
+        "page_number": 1,
+        "total_pages": null,
+        "column_ref": "8",
+        "region": null,
+        "status": "present",
+        "confidence": "medium",
+        "provenance": "machine_read",
+        "raw_text": null
+      }
+    },
+    {
+      "target_type": "Khewat",
+      "target_id": "KHW-5",
+      "remark_category": "Approved_Mutation",
+      "raw_text": "ਨੋਿ- ਇੰਤਕਾਲ ਨੰਬਰ 7715 ਦਮਤੀ 18/3/2019 ਦਵੱਚ ਦਿਸਾ 50/711 ਦਿਸਾ ਬਕਿਰ 0-16-2/3 ਿੀ ਬطਾਏ 20/711 ਦਿਸਾ ਬਕਿਰ 0-0-6-2/3 ਿਰੁਸਤ ਪਦٟਆ طਾਵੇ।",
+      "parsed_meaning": null,
+      "source": {
+        "page_number": 1,
+        "total_pages": null,
+        "column_ref": "8",
+        "region": null,
+        "status": "present",
+        "confidence": "medium",
+        "provenance": "machine_read",
+        "raw_text": null
+      }
+    },
+    {
+      "target_type": "Khewat",
+      "target_id": "KHW-5",
+      "remark_category": "Informational",
+      "raw_text": "ਵਸੀਕਾ ਨੰ:2020-21/19/1/1224, ਦਮਤੀ:22/3/2021, ਵਲᶦ:(SUKHJIT KAUR ), ਦਕਸਮ:Sale Deed, ਰਦطਸਿਰਡ ਿᶦਣ ਸੰਬੰਧੀ طਾਣਕਾਰੀ।",
+      "parsed_meaning": null,
+      "source": {
+        "page_number": 1,
+        "total_pages": null,
+        "column_ref": "8",
+        "region": null,
+        "status": "present",
+        "confidence": "medium",
+        "provenance": "machine_read",
+        "raw_text": null
+      }
+    },
+    {
+      "target_type": "Khewat",
+      "target_id": "KHW-5",
+      "remark_category": "Approved_Mutation",
+      "raw_text": "ਬਰੁਏ ਇੰਤਕਾਲ ਨੰ 7877",
+      "parsed_meaning": null,
+      "source": {
+        "page_number": 1,
+        "total_pages": null,
+        "column_ref": "8",
+        "region": null,
+        "status": "present",
+        "confidence": "medium",
+        "provenance": "machine_read",
+        "raw_text": null
+      }
+    },
+    {
+      "target_type": "Khewat",
+      "target_id": "KHW-6",
+      "remark_category": "Approved_Mutation",
+      "raw_text": "ਬਰੁਏ ਵਸੀਕਾ ਨੰਬਰ:1224,ਵਸੀਕਾ ਦਮਤੀ:22-03-21 ਇੰਤਕਾਲ ਦਮਤੀ 10/9/2021 ਵਲੋ ਸੁਖطੀਤ ਕੌਰ ਪਤਨੀ ਰੁਦਪੰਿਰ ਦਸੰਘ ਪੁੱਤਰ ਅطੈਬ ਦਸੰਘ 20/711 ਦਿੱਸਾ ਬਾਿੱਕ ਗੀਤਾ ਰਾਣੀ ਪਤਨੀ طਸਪਾਲ ਮੁੰਿਮਿ ਪੁੱਤਰ ਨੂਰਿੀਨ 40/711 ਦਿੱਸਾ ਨੰਬਰ ਖਸਰਾ 18//5/2(4-13) 6/1(7-4) ਰਕਬਾ 11-17 ਿਾ 20/711 ਬੈ ਿੋਇਆ ਇੰਤਕਾਲ ਮੰطੂਰ ਿੈ طੀ",
+      "parsed_meaning": null,
+      "source": {
+        "page_number": 1,
+        "total_pages": null,
+        "column_ref": "8",
+        "region": null,
+        "status": "present",
+        "confidence": "high",
+        "provenance": "machine_read",
+        "raw_text": null
+      }
+    },
+    {
+      "target_type": "Khewat",
+      "target_id": "KHW-6",
+      "remark_category": "Informational",
+      "raw_text": "ਦਵਸੇਸ ਕਥਨ : ਵਸੀਕਾ ਨੰ:2023-24/19/1/111 9, ਦਮਤੀ:25/1/2024, ਵਲᶦ:(Bahadur Singh ), ਦਕਸਮ:Sale Deed, ਰਦطਸਿਰਡ ਿᶦਣ ਸੰਬੰਧੀ ਾਣਕਾਰੀ।",
+      "parsed_meaning": null,
+      "source": {
+        "page_number": 1,
+        "total_pages": null,
+        "column_ref": "8",
+        "region": null,
+        "status": "present",
+        "confidence": "high",
+        "provenance": "machine_read",
+        "raw_text": null
+      }
+    },
+    {
+      "target_type": "Khewat",
+      "target_id": "KHW-6",
+      "remark_category": "Informational",
+      "raw_text": "ਦਵਸੇਸ ਕਥਨ : ਵਸੀਕਾ ਨੰ:2023-24/19/1/131 1, ਦਮਤੀ:15/3/2024, ਵਲᶦ:(HARPREET KAUR SIDHU ), ਦਕਸਮ:Sale Deed, ਰਦطਸਿਰਡ ਿᶦਣ ਸੰਬੰਧੀ ਾਣਕਾਰੀ।",
+      "parsed_meaning": null,
+      "source": {
+        "page_number": 1,
+        "total_pages": null,
+        "column_ref": "8",
+        "region": null,
+        "status": "present",
+        "confidence": "high",
+        "provenance": "machine_read",
+        "raw_text": null
+      }
+    },
+    {
+      "target_type": "Khewat",
+      "target_id": "KHW-6",
+      "remark_category": "Informational",
+      "raw_text": "ਦਵਸੇਸ ਕਥਨ : ਵਸੀਕਾ ਨੰ:2024-25/19/1/348 , ਦਮਤੀ:11/6/2024, ਵਲᶦ:(Bahadur Singh ), ਦਕਸਮ:Sale Deed, ਰਦطਸਿਰਡ ਿᶦਣ ਸੰਬੰਧੀ ਾਣਕਾਰੀ।",
+      "parsed_meaning": null,
+      "source": {
+        "page_number": 1,
+        "total_pages": null,
+        "column_ref": "8",
+        "region": null,
+        "status": "present",
+        "confidence": "high",
+        "provenance": "machine_read",
+        "raw_text": null
+      }
+    },
+    {
+      "target_type": "Khewat",
+      "target_id": "KHW-6",
+      "remark_category": "Informational",
+      "raw_text": "ਦਵਸੇਸ ਕਥਨ : ਵਸੀਕਾ ਨੰ:2024-25/19/1/804 , ਦਮਤੀ:24/9/2024, ਵਲᶦ:(BAHADUR SINGH ), ਦਕਸਮ:Sale Deed, ਰਦطਸਿਰਡ ਿᶦਣ ਸੰਬੰਧੀ طਾਣਕਾਰੀ।",
+      "parsed_meaning": null,
+      "source": {
+        "page_number": 1,
+        "total_pages": null,
+        "column_ref": "8",
+        "region": null,
+        "status": "present",
+        "confidence": "high",
+        "provenance": "machine_read",
+        "raw_text": null
+      }
+    },
+    {
+      "target_type": "Khewat",
+      "target_id": "KHW-6",
+      "remark_category": "Informational",
+      "raw_text": "ਦਵਸੇਸ ਕਥਨ : ਵਸੀਕਾ ਨੰ:2024-25/19/1/805 , ਦਮਤੀ:24/9/2024, ਵਲᶦ:(BAHADUR SINGH ), ਦਕਸਮ:Sale Deed, ਰਦطਸਿਰਡ ਿᶦਣ ਸੰਬੰਧੀ طਾਣਕਾਰੀ।",
+      "parsed_meaning": null,
+      "source": {
+        "page_number": 1,
+        "total_pages": null,
+        "column_ref": "8",
+        "region": null,
+        "status": "present",
+        "confidence": "high",
+        "provenance": "machine_read",
+        "raw_text": null
+      }
+    },
+    {
+      "target_type": "Khewat",
+      "target_id": "KHW-1",
+      "remark_category": "Informational",
+      "raw_text": "ਵਸੀਕਾ ਨੰ:2024-25/19/1/803, ਦਮਤੀ:24/9/2024, ਵਲᶦ:(MAJOR SINGH ), ਦਕਸਮ:Sale Deed, ਰਦطਸਿਰਡ ਿᶦਣ ਸੰਬੰਧੀ ਾਣਕਾਰੀ।",
+      "parsed_meaning": "Sale Deed registration information for Vasika No. 2024-25/19/1/803 dated 24/9/2024 by Major Singh.",
+      "source": {
+        "page_number": 1,
+        "total_pages": null,
+        "column_ref": "8",
+        "region": null,
+        "status": "present",
+        "confidence": "high",
+        "provenance": "machine_read",
+        "raw_text": null
+      }
+    },
+    {
+      "target_type": "Khewat",
+      "target_id": "KHW-1",
+      "remark_category": "Informational",
+      "raw_text": "ਵਸੀਕਾ ਨੰ:2024-25/19/1/893, ਦਮਤੀ:28/10/2024, ਵਲᶦ:(BAHADUR SINGH AND OTHER ), ਦਕਸਮ:Sale Deed, ਰਦطਸਿਰਡ ਿᶦਣ ਸੰਬੰਧੀ ਾਣਕਾਰੀ।",
+      "parsed_meaning": "Sale Deed registration information for Vasika No. 2024-25/19/1/893 dated 28/10/2024 by Bahadur Singh and others.",
+      "source": {
+        "page_number": 1,
+        "total_pages": null,
+        "column_ref": "8",
+        "region": null,
+        "status": "present",
+        "confidence": "high",
+        "provenance": "machine_read",
+        "raw_text": null
+      }
+    },
+    {
+      "target_type": "Khewat",
+      "target_id": "KHW-1",
+      "remark_category": "Informational",
+      "raw_text": "ਵਸੀਕਾ ਨੰ:2024-25/19/1/884, ਦਮਤੀ:24/10/2024, ਵਲᶦ:(MAJOR SINGH ), ਦਕਸਮ:Sale Deed, ਰਦطਸਿਰਡ ਿᶦਣ ਸੰਬੰਧੀ ਾਣਕਾਰੀ।",
+      "parsed_meaning": "Sale Deed registration information for Vasika No. 2024-25/19/1/884 dated 24/10/2024 by Major Singh.",
+      "source": {
+        "page_number": 1,
+        "total_pages": null,
+        "column_ref": "8",
+        "region": null,
+        "status": "present",
+        "confidence": "high",
+        "provenance": "machine_read",
+        "raw_text": null
+      }
+    },
+    {
+      "target_type": "Khewat",
+      "target_id": "KHW-1",
+      "remark_category": "Informational",
+      "raw_text": "ਵਸੀਕਾ ਨੰ:2024-25/19/1/1188, ਦਮਤੀ:7/1/2025, ਵਲᶦ:(BAHADUR SINGH AND OTHER ), ਦਕਸਮ:Sale Deed, ਰਦطਸਿਰਡ ਿᶦਣ ਸੰਬੰਧੀ ਾਣਕਾਰੀ।",
+      "parsed_meaning": "Sale Deed registration information for Vasika No. 2024-25/19/1/1188 dated 7/1/2025 by Bahadur Singh and others.",
+      "source": {
+        "page_number": 1,
+        "total_pages": null,
+        "column_ref": "8",
+        "region": null,
+        "status": "present",
+        "confidence": "high",
+        "provenance": "machine_read",
+        "raw_text": null
+      }
+    },
+    {
+      "target_type": "Khewat",
+      "target_id": "KHW-1",
+      "remark_category": "Informational",
+      "raw_text": "ਵਸੀਕਾ ਨੰ:2024-25/19/1/1189, ਦਮਤੀ:7/1/2025, ਵਲᶦ:(BAHADUR SINGH AND OTHER ), ਦਕਸਮ:Sale Deed, ਰਦطਸਿਰਡ ਿᶦਣ ਸੰਬੰਧੀ ਾਣਕਾਰੀ।",
+      "parsed_meaning": "Sale Deed registration information for Vasika No. 2024-25/19/1/1189 dated 7/1/2025 by Bahadur Singh and others.",
+      "source": {
+        "page_number": 1,
+        "total_pages": null,
+        "column_ref": "8",
+        "region": null,
+        "status": "present",
+        "confidence": "high",
+        "provenance": "machine_read",
+        "raw_text": null
+      }
+    },
+    {
+      "target_type": "Khewat",
+      "target_id": "KHW-1",
+      "remark_category": "Pending_Mutation",
+      "raw_text": "ਬਰੁਏ ਇੰਤਕਾਲ ਨੰ 8032",
+      "parsed_meaning": "Mutation number 8032 is pending.",
+      "source": {
+        "page_number": 1,
+        "total_pages": null,
+        "column_ref": "8",
+        "region": null,
+        "status": "present",
+        "confidence": "high",
+        "provenance": "machine_read",
+        "raw_text": null
+      }
+    },
+    {
+      "target_type": "Khewat",
+      "target_id": "KHW-310",
+      "remark_category": "Approved_Mutation",
+      "raw_text": "ਇੰਤਕਾਲ ਦਮਤੀ 11/6/2025 ਵਲੋ ਕਰਨੈਲ ਦਸੰਘ ਪੁੱਤਰ ਿਰਬਾਰਾ ਦਸੰਘ ਪੁੱਤਰ ਮੰਗਲ ਦਸੰਘ 34/2133 ਦਿੱਸਾ ਬਾਿੱਕ ਸੁਦਰੰਿਰ ਕੌਰ ਪਤਨੀ ਰਾਮ ਲਾਲ ਪੁੱਤਰ ਲਛਮਣ ਦਸੰਘ 34/2133 ਦਿੱਸਾ ਿਰਪᴆੀਤ ਕੌਰ ਦਸੱਧੂ ਪਤਨੀ ਗੁਰਸੇਵਕ ਦਸੰਘ ਦਸੱਧੂ ਪੁੱਤਰ ਕੇਸਰ ਦਸੰਘ 34/2133 ਦਿੱਸਾ ਨੰਬਰ ਖਸਰਾ 18//5/2(4-13) 6/1(7-4) ਰਕਬਾ 11-17 ਿਾ 34/2133 ਦਿਸਾ ਬਕਿਰ 0-3-7/9 (ਬਾ ਖਾਨਾ ਕਾਸਤ) ਬੈ ਿੋਇਆ ਇੰਤਕਾਲ ਮੰطੂਰ ਿੈ طੀ",
+      "parsed_meaning": "Mutation dated 11/6/2025 regarding transfer of shares (34/2133 each) to Karnail Singh, Sudarinder Kaur, and Harpreet Kaur Sidhu for Khasra 18//5/2 and 6/1. Mutation sanctioned.",
+      "source": {
+        "page_number": 1,
+        "total_pages": null,
+        "column_ref": "8",
+        "region": null,
+        "status": "present",
+        "confidence": "high",
+        "provenance": "machine_read",
+        "raw_text": null
+      }
+    }
+  ],
+  "mutations": [
+    {
+      "mutation_id": "MUT-1",
+      "target_type": "Khewat",
+      "target_id": "KHW-1",
+      "status": "Pending",
+      "mutation_type": "Mortgage",
+      "transfer_scope": null,
+      "affected_khasra_numbers": [],
+      "discharges_mutation_id": null,
+      "mutation_date": null,
+      "sequence_index": null,
+      "transferor_owner_id": null,
+      "transferee_name": null,
+      "transferor_name": null,
+      "share_transferred": null,
+      "area_transferred": null,
+      "sanction_wording": null,
+      "raw_text": "ਿਫਤਰੀ ਨੰਬਰ 353 ਦਮਤੀ 29/1/2021 ਵਲੋ ਪਰਮطੀਤ ਦਸੰਘ ਪੁੱਤਰ ਅਮਰ ਦਸੰਘ ਨੇ ਰਾਿੀ ਖੇਵਿ ਨੰਬਰ 44/49 ਨੰਬਰ ਖਸਰਾ 30//16/1(1-17) 31//17/2(1-16) 19(8-0) 20(7-18) ਰਕਬਾ 19-11 ਿਾ 123/391 ਦਿਸਾ ਬਕਿਰ 6-3 ਵਾ ਖੇਵਿ ਨੰਬਰ 177/196 ਨੰਬਰ ਖਸਰਾ 14//7/4(1-14) 8(2-7) 9(0-4) 12(6-5) 13/1(5-14) 14/1(0-1) 18/4(0-12) 19/2(3-6) 23(8-0) 27//3/2(6-12) ਰਕਬਾ 34-15 ਿਾ 86/695 ਦਿਸਾ ਬਕਿਰ 4-6 ਕੁਲ ਰਕਬਾ 10-9 ਮਏ ਿੀਗਰ ਈਰਾطੀ ਰਕਬਾ 12-13 ਦਪੰਡ ਰਾਣਵਾ ਿੋਨਾ ਦਪੰਡਾ ਿਾ ਕੁਲ ਰਕਬਾ 23-2 ਬਿਲੇ 8,10,000/- ਰੁਪਏ ਬਾਿੱਕ ਐਚ ਡੀ ਐਫ ਸੀ ਬੈਕ ਬਰਾਚ ਖਮਾਣੋ ਪਾਸ ਆٟ ਰਦਿਨ ਿੈ।",
+      "parsed_meaning": null,
+      "extraction_status": "present",
+      "source": {
+        "page_number": 1,
+        "total_pages": null,
+        "column_ref": "8",
+        "region": null,
+        "status": "present",
+        "confidence": "high",
+        "provenance": "machine_read",
+        "raw_text": null
+      }
+    },
+    {
+      "mutation_id": "MUT-2",
+      "target_type": "Khewat",
+      "target_id": "KHW-2",
+      "status": "Approved",
+      "mutation_type": "Mortgage",
+      "transfer_scope": null,
+      "affected_khasra_numbers": [],
+      "discharges_mutation_id": null,
+      "mutation_date": null,
+      "sequence_index": null,
+      "transferor_owner_id": null,
+      "transferee_name": null,
+      "transferor_name": null,
+      "share_transferred": null,
+      "area_transferred": null,
+      "sanction_wording": null,
+      "raw_text": "ਿਫਤਰੀ ਨੰਬਰ 342 ਦਮਤੀ 3/2/2022",
+      "parsed_meaning": null,
+      "extraction_status": "present",
+      "source": {
+        "page_number": 1,
+        "total_pages": null,
+        "column_ref": "8",
+        "region": null,
+        "status": "present",
+        "confidence": "high",
+        "provenance": "machine_read",
+        "raw_text": null
+      }
+    },
+    {
+      "mutation_id": "MUT-3",
+      "target_type": "Khewat",
+      "target_id": "KHW-2",
+      "status": "Approved",
+      "mutation_type": "Release_Discharge",
+      "transfer_scope": null,
+      "affected_khasra_numbers": [],
+      "discharges_mutation_id": "MUT-3",
+      "mutation_date": null,
+      "sequence_index": null,
+      "transferor_owner_id": null,
+      "transferee_name": null,
+      "transferor_name": null,
+      "share_transferred": null,
+      "area_transferred": null,
+      "sanction_wording": null,
+      "raw_text": "ਰਪਿ ਨੰਬਰ 189 ਦਮਤੀ 6/2/2021",
+      "parsed_meaning": null,
+      "extraction_status": "present",
+      "source": {
+        "page_number": 1,
+        "total_pages": null,
+        "column_ref": "8",
+        "region": null,
+        "status": "present",
+        "confidence": "high",
+        "provenance": "machine_read",
+        "raw_text": null
+      }
+    },
+    {
+      "mutation_id": "MUT-4",
+      "target_type": "Khewat",
+      "target_id": "KHW-3",
+      "status": "Uncertain",
+      "mutation_type": "Inheritance",
+      "transfer_scope": null,
+      "affected_khasra_numbers": [],
+      "discharges_mutation_id": null,
+      "mutation_date": null,
+      "sequence_index": null,
+      "transferor_owner_id": null,
+      "transferee_name": null,
+      "transferor_name": null,
+      "share_transferred": null,
+      "area_transferred": null,
+      "sanction_wording": null,
+      "raw_text": "ਇੰਤਕਾਲ ਨੰ 7676 ਵਰਾਸਤ",
+      "parsed_meaning": null,
+      "extraction_status": "present",
+      "source": {
+        "page_number": 1,
+        "total_pages": null,
+        "column_ref": "8",
+        "region": null,
+        "status": "present",
+        "confidence": "medium",
+        "provenance": "machine_read",
+        "raw_text": null
+      }
+    },
+    {
+      "mutation_id": "MUT-5",
+      "target_type": "Khewat",
+      "target_id": "KHW-3",
+      "status": "Uncertain",
+      "mutation_type": "Inheritance",
+      "transfer_scope": null,
+      "affected_khasra_numbers": [],
+      "discharges_mutation_id": null,
+      "mutation_date": null,
+      "sequence_index": null,
+      "transferor_owner_id": null,
+      "transferee_name": null,
+      "transferor_name": null,
+      "share_transferred": null,
+      "area_transferred": null,
+      "sanction_wording": null,
+      "raw_text": "7688 ਵਰਾਸਤ",
+      "parsed_meaning": null,
+      "extraction_status": "present",
+      "source": {
+        "page_number": 1,
+        "total_pages": null,
+        "column_ref": "8",
+        "region": null,
+        "status": "present",
+        "confidence": "medium",
+        "provenance": "machine_read",
+        "raw_text": null
+      }
+    },
+    {
+      "mutation_id": "MUT-6",
+      "target_type": "Khewat",
+      "target_id": "KHW-3",
+      "status": "Pending",
+      "mutation_type": null,
+      "transfer_scope": null,
+      "affected_khasra_numbers": [],
+      "discharges_mutation_id": null,
+      "mutation_date": null,
+      "sequence_index": null,
+      "transferor_owner_id": null,
+      "transferee_name": null,
+      "transferor_name": null,
+      "share_transferred": null,
+      "area_transferred": null,
+      "sanction_wording": null,
+      "raw_text": "ਬਰੁਏ ਰਪਿ ਨੰ 422",
+      "parsed_meaning": null,
+      "extraction_status": "present",
+      "source": {
+        "page_number": 1,
+        "total_pages": null,
+        "column_ref": "8",
+        "region": null,
+        "status": "present",
+        "confidence": "medium",
+        "provenance": "machine_read",
+        "raw_text": null
+      }
+    },
+    {
+      "mutation_id": "MUT-7",
+      "target_type": "Khewat",
+      "target_id": "KHW-5",
+      "status": "Approved",
+      "mutation_type": "Correction",
+      "transfer_scope": null,
+      "affected_khasra_numbers": [],
+      "discharges_mutation_id": null,
+      "mutation_date": "18/3/2019",
+      "sequence_index": null,
+      "transferor_owner_id": null,
+      "transferee_name": null,
+      "transferor_name": null,
+      "share_transferred": null,
+      "area_transferred": null,
+      "sanction_wording": null,
+      "raw_text": "ਨੋਿ- ਇੰਤਕਾਲ ਨੰਬਰ 7715 ਦਮਤੀ 18/3/2019 ਦਵੱਚ ਦਿਸਾ 50/711 ਦਿਸਾ ਬਕਿਰ 0-16-2/3 ਿੀ ਬطਾਏ 20/711 ਦਿਸਾ ਬਕਿਰ 0-0-6-2/3 ਿਰੁਸਤ ਪਦٟਆ طਾਵੇ।",
+      "parsed_meaning": null,
+      "extraction_status": "present",
+      "source": {
+        "page_number": 1,
+        "total_pages": null,
+        "column_ref": "8",
+        "region": null,
+        "status": "present",
+        "confidence": "medium",
+        "provenance": "machine_read",
+        "raw_text": null
+      }
+    },
+    {
+      "mutation_id": "MUT-8",
+      "target_type": "Khewat",
+      "target_id": "KHW-5",
+      "status": "Approved",
+      "mutation_type": null,
+      "transfer_scope": null,
+      "affected_khasra_numbers": [],
+      "discharges_mutation_id": null,
+      "mutation_date": null,
+      "sequence_index": null,
+      "transferor_owner_id": null,
+      "transferee_name": null,
+      "transferor_name": null,
+      "share_transferred": null,
+      "area_transferred": null,
+      "sanction_wording": null,
+      "raw_text": "ਬਰੁਏ ਇੰਤਕਾਲ ਨੰ 7877",
+      "parsed_meaning": null,
+      "extraction_status": "present",
+      "source": {
+        "page_number": 1,
+        "total_pages": null,
+        "column_ref": "8",
+        "region": null,
+        "status": "present",
+        "confidence": "medium",
+        "provenance": "machine_read",
+        "raw_text": null
+      }
+    },
+    {
+      "mutation_id": "MUT-9",
+      "target_type": "Khewat",
+      "target_id": "KHW-6",
+      "status": "Approved",
+      "mutation_type": "Other",
+      "transfer_scope": null,
+      "affected_khasra_numbers": [],
+      "discharges_mutation_id": null,
+      "mutation_date": "10/9/2021",
+      "sequence_index": null,
+      "transferor_owner_id": null,
+      "transferee_name": null,
+      "transferor_name": null,
+      "share_transferred": null,
+      "area_transferred": null,
+      "sanction_wording": "ਮੰطੂਰ ਿੈ",
+      "raw_text": "ਬਰੁਏ ਵਸੀਕਾ ਨੰਬਰ:1224,ਵਸੀਕਾ ਦਮਤੀ:22-03-21 ਇੰਤਕਾਲ ਦਮਤੀ 10/9/2021 ਵਲੋ ਸੁਖطੀਤ ਕੌਰ ਪਤਨੀ ਰੁਦਪੰਿਰ ਦਸੰਘ ਪੁੱਤਰ ਅطੈਬ ਦਸੰਘ 20/711 ਦਿੱਸਾ ਬਾਿੱਕ ਗੀਤਾ ਰਾਣੀ ਪਤਨੀ طਸਪਾਲ ਮੁੰਿਮਿ ਪੁੱਤਰ ਨੂਰਿੀਨ 40/711 ਦਿੱਸਾ ਨੰਬਰ ਖਸਰਾ 18//5/2(4-13) 6/1(7-4) ਰਕਬਾ 11-17 ਿਾ 20/711 ਬੈ ਿੋਇਆ ਇੰਤਕਾਲ ਮੰطੂਰ ਿੈ طੀ",
+      "parsed_meaning": null,
+      "extraction_status": "present",
+      "source": {
+        "page_number": 1,
+        "total_pages": null,
+        "column_ref": "8",
+        "region": null,
+        "status": "present",
+        "confidence": "high",
+        "provenance": "machine_read",
+        "raw_text": null
+      }
+    },
+    {
+      "mutation_id": "MUT-10",
+      "target_type": "Khewat",
+      "target_id": "KHW-1",
+      "status": "Pending",
+      "mutation_type": null,
+      "transfer_scope": null,
+      "affected_khasra_numbers": [],
+      "discharges_mutation_id": null,
+      "mutation_date": null,
+      "sequence_index": null,
+      "transferor_owner_id": null,
+      "transferee_name": null,
+      "transferor_name": null,
+      "share_transferred": null,
+      "area_transferred": null,
+      "sanction_wording": null,
+      "raw_text": "ਬਰੁਏ ਇੰਤਕਾਲ ਨੰ 8032",
+      "parsed_meaning": null,
+      "extraction_status": "present",
+      "source": {
+        "page_number": 1,
+        "total_pages": null,
+        "column_ref": "8",
+        "region": null,
+        "status": "present",
+        "confidence": "high",
+        "provenance": "machine_read",
+        "raw_text": null
+      }
+    },
+    {
+      "mutation_id": "MUT-11",
+      "target_type": "Khewat",
+      "target_id": "KHW-310",
+      "status": "Approved",
+      "mutation_type": "Other",
+      "transfer_scope": null,
+      "affected_khasra_numbers": [
+        "18//5/2",
+        "6/1"
+      ],
+      "discharges_mutation_id": null,
+      "mutation_date": "11/6/2025",
+      "sequence_index": null,
+      "transferor_owner_id": null,
+      "transferee_name": "Karnail Singh, Sudarinder Kaur, Harpreet Kaur Sidhu",
+      "transferor_name": null,
+      "share_transferred": null,
+      "area_transferred": null,
+      "sanction_wording": "ਇੰਤਕਾਲ ਮੰطੂਰ ਿੈ",
+      "raw_text": "ਇੰਤਕਾਲ ਦਮਤੀ 11/6/2025 ਵਲੋ ਕਰਨੈਲ ਦਸੰਘ ਪੁੱਤਰ ਿਰਬਾਰਾ ਦਸੰਘ ਪੁੱਤਰ ਮੰਗਲ ਦਸੰਘ 34/2133 ਦਿੱਸਾ ਬਾਿੱਕ ਸੁਦਰੰਿਰ ਕੌਰ ਪਤਨੀ ਰਾਮ ਲਾਲ ਪੁੱਤਰ ਲਛਮਣ ਦਸੰਘ 34/2133 ਦਿੱਸਾ ਿਰਪᴆੀਤ ਕੌਰ ਦਸੱਧੂ ਪਤਨੀ ਗੁਰਸੇਵਕ ਦਸੰਘ ਦਸੱਧੂ ਪੁੱਤਰ ਕੇਸਰ ਦਸੰਘ 34/2133 ਦਿੱਸਾ ਨੰਬਰ ਖਸਰਾ 18//5/2(4-13) 6/1(7-4) ਰਕਬਾ 11-17 ਿਾ 34/2133 ਦਿਸਾ ਬਕਿਰ 0-3-7/9 (ਬਾ ਖਾਨਾ ਕਾਸਤ) ਬੈ ਿੋਇਆ ਇੰਤਕਾਲ ਮੰطੂਰ ਿੈ طੀ",
+      "parsed_meaning": null,
+      "extraction_status": "present",
+      "source": {
+        "page_number": 1,
+        "total_pages": null,
+        "column_ref": "8",
+        "region": null,
+        "status": "present",
+        "confidence": "high",
+        "provenance": "machine_read",
+        "raw_text": null
+      }
+    }
+  ],
+  "parcel_interests": [],
+  "cultivation_interests": [
+    {
+      "cultivation_interest_id": "CI-1",
+      "person_name": "ਖੁਿਕਾਸ਼ਤ",
+      "khewat_id": "KHW-1",
+      "khatauni_id": "KHT-1",
+      "relationship": "khud_kasht",
+      "raw_relationship_text": null,
+      "share_fraction": null,
+      "status": "present",
+      "source": {
+        "page_number": 1,
+        "total_pages": null,
+        "column_ref": "4",
+        "region": null,
+        "status": "present",
+        "confidence": "high",
+        "provenance": "machine_read",
+        "raw_text": null
+      }
+    },
+    {
+      "cultivation_interest_id": "CI-2",
+      "person_name": "ਮਕਬੂਜਾ ਮਾਲਕਾਨ",
+      "khewat_id": "KHW-3",
+      "khatauni_id": "KHT-2",
+      "relationship": "maqbuza_malkan",
+      "raw_relationship_text": null,
+      "share_fraction": null,
+      "status": "present",
+      "source": {
+        "page_number": 1,
+        "total_pages": null,
+        "column_ref": "4",
+        "region": null,
+        "status": "present",
+        "confidence": "medium",
+        "provenance": "machine_read",
+        "raw_text": null
+      }
+    },
+    {
+      "cultivation_interest_id": "CI-3",
+      "person_name": "ਪਰਦਮੰਿਰ ਦਸੰਘ ਐਡ ਕੰਪਨੀ",
+      "khewat_id": "KHW-310",
+      "khatauni_id": "KHT-218",
+      "relationship": "maqbuza_malkan",
+      "raw_relationship_text": "ਮਕਬੂਟਾ",
+      "share_fraction": null,
+      "status": "present",
+      "source": {
+        "page_number": 1,
+        "total_pages": null,
+        "column_ref": "4",
+        "region": null,
+        "status": "present",
+        "confidence": "high",
+        "provenance": "machine_read",
+        "raw_text": "ਪਰਦਮੰਿਰ ਦਸੰਘ ਐਡ ਕੰਪਨੀ ਮਕਬੂਟਾ"
+      }
+    }
+  ],
+  "area_observations": [
+    {
+      "observation_id": "AOBS-1",
+      "scope": "khatauni_subtotal",
+      "area": {
+        "kanal": 27,
+        "marla": 11,
+        "sarsahi": 0,
+        "raw_text": "27 ਕਨਾਲ 11 ਮਰਲਾ",
+        "status": "present"
+      },
+      "khewat_id": null,
+      "khatauni_id": "KHT-1",
+      "khasra_id": null,
+      "source": {
+        "page_number": 1,
+        "total_pages": null,
+        "column_ref": "7",
+        "region": null,
+        "status": "present",
+        "confidence": "high",
+        "provenance": "machine_read",
+        "raw_text": null
+      }
+    },
+    {
+      "observation_id": "AOBS-2",
+      "scope": "khatauni_subtotal",
+      "area": {
+        "kanal": 0,
+        "marla": 8,
+        "sarsahi": 0,
+        "raw_text": "0-8",
+        "status": "present"
+      },
+      "khewat_id": null,
+      "khatauni_id": "KHT-2",
+      "khasra_id": null,
+      "source": {
+        "page_number": 1,
+        "total_pages": null,
+        "column_ref": "7",
+        "region": null,
+        "status": "present",
+        "confidence": "medium",
+        "provenance": "machine_read",
+        "raw_text": null
+      }
+    },
+    {
+      "observation_id": "AOBS-3",
+      "scope": "khasra_area",
+      "area": {
+        "kanal": 0,
+        "marla": 6,
+        "sarsahi": 0,
+        "raw_text": "0-6",
+        "status": "present"
+      },
+      "khewat_id": null,
+      "khatauni_id": "KHT-218",
+      "khasra_id": "KHS-23-5-1",
+      "source": {
+        "page_number": 1,
+        "total_pages": null,
+        "column_ref": "7",
+        "region": null,
+        "status": "present",
+        "confidence": "high",
+        "provenance": "machine_read",
+        "raw_text": "0-6"
+      }
+    },
+    {
+      "observation_id": "AOBS-4",
+      "scope": "khatauni_subtotal",
+      "area": {
+        "kanal": 0,
+        "marla": 6,
+        "sarsahi": 0,
+        "raw_text": "0 ਕਨਾਲ 6 ਮਰਲਾ",
+        "status": "present"
+      },
+      "khewat_id": null,
+      "khatauni_id": "KHT-218",
+      "khasra_id": null,
+      "source": {
+        "page_number": 1,
+        "total_pages": null,
+        "column_ref": "7",
+        "region": null,
+        "status": "present",
+        "confidence": "high",
+        "provenance": "machine_read",
+        "raw_text": "0 ਕਨਾਲ 6 ਮਰਲਾ"
+      }
+    },
+    {
+      "observation_id": "AOBS-5",
+      "scope": "khasra_area",
+      "area": {
+        "kanal": 4,
+        "marla": 13,
+        "sarsahi": 0,
+        "raw_text": "4-13",
+        "status": "present"
+      },
+      "khewat_id": null,
+      "khatauni_id": null,
+      "khasra_id": null,
+      "source": {
+        "page_number": 1,
+        "total_pages": null,
+        "column_ref": "7",
+        "region": null,
+        "status": "present",
+        "confidence": "medium",
+        "provenance": "machine_read",
+        "raw_text": null
+      }
+    },
+    {
+      "observation_id": "AOBS-6",
+      "scope": "khasra_area",
+      "area": {
+        "kanal": 7,
+        "marla": 4,
+        "sarsahi": 0,
+        "raw_text": "7-4",
+        "status": "present"
+      },
+      "khewat_id": null,
+      "khatauni_id": null,
+      "khasra_id": null,
+      "source": {
+        "page_number": 1,
+        "total_pages": null,
+        "column_ref": "7",
+        "region": null,
+        "status": "present",
+        "confidence": "medium",
+        "provenance": "machine_read",
+        "raw_text": null
+      }
+    },
+    {
+      "observation_id": "AOBS-7",
+      "scope": "khewat_total",
+      "area": {
+        "kanal": 11,
+        "marla": 17,
+        "sarsahi": 0,
+        "raw_text": "11 ਕਨਾਲ 17 ਮਰਲਾ",
+        "status": "present"
+      },
+      "khewat_id": null,
+      "khatauni_id": null,
+      "khasra_id": null,
+      "source": {
+        "page_number": 1,
+        "total_pages": null,
+        "column_ref": "7",
+        "region": null,
+        "status": "present",
+        "confidence": "medium",
+        "provenance": "machine_read",
+        "raw_text": null
+      }
+    },
+    {
+      "observation_id": "AOBS-8",
+      "scope": "khewat_total",
+      "area": {
+        "kanal": 11,
+        "marla": 15,
+        "sarsahi": 0,
+        "raw_text": "11-15",
+        "status": "present"
+      },
+      "khewat_id": "KHW-6",
+      "khatauni_id": null,
+      "khasra_id": null,
+      "source": {
+        "page_number": 1,
+        "total_pages": null,
+        "column_ref": "7",
+        "region": null,
+        "status": "present",
+        "confidence": "high",
+        "provenance": "machine_read",
+        "raw_text": null
+      }
+    }
+  ]
+}
