@@ -41,6 +41,10 @@ Structural relationship rules:
    ownership as "unknown" just because it has no owner row of its own; it inherits the Khewat's owners.
    Khatauni-level fields (raw_cultivator_name, raw_possession_type) instead capture cultivation/possession,
    which is a separate concept from ownership.
+6b. raw_owner_name_parentage must contain ONLY the owner's name and parentage text -- never the share
+    fraction, even when Column 3 prints the name and share close together or on the same line. The share
+    belongs solely in raw_share_fraction. Stop transcribing raw_owner_name_parentage as soon as the name and
+    parentage are complete; do not continue into the next number/fraction printed after it.
 
 Column 8 / remarks and mutations:
 7. Extract Column 8 remarks and link them precisely to their target (Khewat, Khatauni, Owner, or Khasra),
