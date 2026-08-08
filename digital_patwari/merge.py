@@ -16,10 +16,12 @@ from dataclasses import dataclass
 from typing import Iterable
 
 from digital_patwari.models import (
+    AreaKanalMarlaSarsahi,
     AreaObservation,
     CultivationInterest,
     DigitalPatwariDocument,
     DocumentHeader,
+    ExtractionStatus,
     Khasra,
     Khatauni,
     Khewat,
@@ -160,6 +162,10 @@ def _merge_khewats(pages) -> tuple[list[Khewat], _IdMap]:
                     if khasra.khasra_number not in khasra_first_seen:
                         khasra_first_seen[khasra.khasra_number] = khasra
                         khasra_order.append(khasra.khasra_number)
+                    else:
+                        khasra_first_seen[khasra.khasra_number] = _merge_khasra_rows(
+                            khasra_first_seen[khasra.khasra_number], khasra
+                        )
 
             merged_khasras: list[Khasra] = []
             for khasra_number in khasra_order:
@@ -184,7 +190,10 @@ def _merge_khewats(pages) -> tuple[list[Khewat], _IdMap]:
                     raw_possession_type=_first_non_none(k.raw_possession_type for _, k in kgroup),
                     raw_total_share=_first_non_none(k.raw_total_share for _, k in kgroup) or "1/1",
                     total_share=_first_non_none(k.total_share for _, k in kgroup) or "1/1",
-                    recorded_total_area=_first_non_none(k.recorded_total_area for _, k in kgroup),
+                    recorded_total_area=_prefer_area_values(
+                        _first_non_none(k.recorded_total_area for _, k in kgroup),
+                        _first_non_none(k.recorded_total_area for _, k in reversed(kgroup)),
+                    ),
                     khasras=merged_khasras,
                     source=_first_non_none(k.source for _, k in kgroup),
                 )
@@ -234,6 +243,43 @@ def _merge_khewats(pages) -> tuple[list[Khewat], _IdMap]:
         )
 
     return merged_khewats, id_map
+
+
+def _prefer_non_empty(old_value: str | None, new_value: str | None) -> str | None:
+    if new_value is None or new_value == "":
+        return old_value
+    if old_value is None or old_value == "":
+        return new_value
+    return old_value
+
+
+def _prefer_area_values(
+    old_area: AreaKanalMarlaSarsahi | None,
+    new_area: AreaKanalMarlaSarsahi | None,
+) -> AreaKanalMarlaSarsahi | None:
+    if old_area is None:
+        return new_area
+    if new_area is None:
+        return old_area
+    old_sarsahi = old_area.total_sarsahi(20, 9)
+    new_sarsahi = new_area.total_sarsahi(20, 9)
+    return new_area if new_sarsahi >= old_sarsahi else old_area
+
+
+def _merge_khasra_rows(existing: Khasra, candidate: Khasra) -> Khasra:
+    return existing.model_copy(update={
+        "murabba_number": _prefer_non_empty(existing.murabba_number, candidate.murabba_number),
+        "area_kanal_marla": candidate.area_kanal_marla
+        if existing.area_kanal_marla.total_sarsahi(20, 9) == 0
+        and candidate.area_kanal_marla.total_sarsahi(20, 9) != 0
+        else existing.area_kanal_marla,
+        "raw_soil_classification": _prefer_non_empty(existing.raw_soil_classification, candidate.raw_soil_classification),
+        "normalized_soil_classification": _prefer_non_empty(existing.normalized_soil_classification, candidate.normalized_soil_classification),
+        "normalized_irrigation_source": _prefer_non_empty(existing.normalized_irrigation_source, candidate.normalized_irrigation_source),
+        "normalized_cultivation_status": _prefer_non_empty(existing.normalized_cultivation_status, candidate.normalized_cultivation_status),
+        "status": candidate.status if existing.status != ExtractionStatus.PRESENT and candidate.status == ExtractionStatus.PRESENT else existing.status,
+        "source": _first_non_none(existing.source, candidate.source),
+    })
 
 
 def _resolve(id_map: _IdMap, kind: str, page_number: int, old_id: str | None) -> str | None:

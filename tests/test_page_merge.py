@@ -1,5 +1,6 @@
 from digital_patwari.merge import merge_page_documents
 from tests.factories import (
+    make_area,
     make_document,
     make_khatauni,
     make_khewat,
@@ -63,6 +64,59 @@ def test_remark_target_id_rewritten_to_regenerated_khewat_id():
     document = result.document
 
     assert document.remarks[0].target_id == document.khewats[0].khewat_id
+
+
+def test_khatauni_total_from_later_page_is_not_lost_during_merge():
+    page1 = make_document(
+        khewats=[
+            make_khewat(
+                "KHW-1",
+                khewat_number="45",
+                khataunis=[make_khatauni("KHT-1", "KHW-1", khatauni_number="12", recorded_area=make_area(kanal=0))],
+            )
+        ]
+    )
+    page2 = make_document(
+        khewats=[
+            make_khewat(
+                "KHW-1",
+                khewat_number="45",
+                khataunis=[make_khatauni("KHT-1", "KHW-1", khatauni_number="12", recorded_area=make_area(kanal=5))],
+            )
+        ]
+    )
+
+    merged = merge_page_documents([(1, page1), (2, page2)]).document
+    assert len(merged.khewats) == 1
+    assert len(merged.khewats[0].khataunis) == 1
+    assert merged.khewats[0].khataunis[0].recorded_total_area.kanal == 5
+
+
+def test_final_page_khatauni_is_preserved_when_a_khewat_continues_across_pages():
+    page1 = make_document(
+        khewats=[
+            make_khewat(
+                "KHW-1",
+                khewat_number="45",
+                owners=[make_owner("OWN-1", "KHW-1", "1/2")],
+                khataunis=[make_khatauni("KHT-1", "KHW-1", khatauni_number="12")],
+            )
+        ]
+    )
+    page2 = make_document(
+        khewats=[
+            make_khewat(
+                "KHW-1",
+                khewat_number="45",
+                khataunis=[make_khatauni("KHT-2", "KHW-1", khatauni_number="13", recorded_area=make_area(kanal=7))],
+            )
+        ]
+    )
+
+    merged = merge_page_documents([(1, page1), (2, page2)]).document
+    assert len(merged.khewats) == 1
+    assert len(merged.khewats[0].khataunis) == 2
+    assert merged.khewats[0].khataunis[1].khatauni_number == "13"
 
 
 def test_document_header_disagreement_across_pages_is_a_warning_not_a_crash():

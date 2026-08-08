@@ -146,10 +146,14 @@ class FardExtractionParser:
         document_parts = load_document_parts(document_paths)
         user_prompt = "Extract the attached Fard/Jamabandi page conforming to the exact schema."
 
-        numbered_parts = list(enumerate(document_parts, start=1))
+        numbered_parts = [
+            (part.get("page_number", i), part)
+            for i, part in enumerate(document_parts, start=1)
+        ]
         page_results: dict[int, DigitalPatwariDocument] = {}
         page_warnings: list[str] = []
 
+        numbered_parts.sort(key=lambda item: item[0])
         for batch_start in range(0, len(numbered_parts), self.batch_size):
             batch = numbered_parts[batch_start:batch_start + self.batch_size]
             outcomes = await asyncio.gather(

@@ -77,5 +77,11 @@ def load_document_parts(paths: list[str | Path]) -> list[dict[str, Any]]:
             parts.extend(_split_pdf_into_parts(path))
             continue
         encoded = base64.b64encode(path.read_bytes()).decode("ascii")
-        parts.append({"filename": path.name, "mime_type": mime_type, "base64_data": encoded})
+        parts.append({
+            "filename": path.name,
+            "mime_type": mime_type,
+            "base64_data": encoded,
+            "page_number": len(parts) + 1,
+            "source_path": str(path),
+        })
     return parts

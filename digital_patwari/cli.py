@@ -1,10 +1,13 @@
 from __future__ import annotations
 
 import argparse
+import json
 import os
+import sys
 from pathlib import Path
 
 from digital_patwari.extraction import FardExtractionParser
+from digital_patwari.models import DigitalPatwariDocument
 from digital_patwari.providers.gemini import MyLLMAdapter
 
 try:
@@ -19,10 +22,53 @@ def _atomic_write_text(path: Path, content: str) -> None:
     os.replace(tmp_path, path)
 
 
-def main() -> int:
-    if load_dotenv is not None:
-        load_dotenv()
+def _load_document_from_json(path: Path) -> DigitalPatwariDocument:
+    if not path.exists():
+        raise FileNotFoundError(path)
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    return DigitalPatwariDocument.model_validate(payload)
 
+
+def _print_document_summary(document: DigitalPatwariDocument) -> None:
+    header = document.document_header
+    print("Digital Patwari Document Summary")
+    print("================================")
+    print(f"Village: {header.village}")
+    print(f"Hadbast Number: {header.hadbast_number}")
+    print(f"Jamabandi Year: {header.jamabandi_year}")
+    print(f"LR Number: {header.lr_number}")
+    if header.district:
+        print(f"District: {header.district}")
+    if header.tehsil:
+        print(f"Tehsil: {header.tehsil}")
+    print(f"Layout: {document.layout.value}")
+
+    total_owners = sum(len(k.owners) for k in document.khewats)
+    total_khataunis = sum(len(k.khataunis) for k in document.khewats)
+    total_khasras = sum(len(kh.khasras) for k in document.khewats for kh in k.khataunis)
+    print("")
+    print(f"Khewats: {len(document.khewats)}")
+    print(f"Owners: {total_owners}")
+    print(f"Khataunis: {total_khataunis}")
+    print(f"Khasras: {total_khasras}")
+    print(f"Remarks: {len(document.remarks)}")
+    print(f"Mutations: {len(document.mutations)}")
+    print(f"Parcel interests: {len(document.parcel_interests)}")
+    print(f"Cultivation interests: {len(document.cultivation_interests)}")
+    print(f"Area observations: {len(document.area_observations)}")
+
+    if document.khewats:
+        print("\nKhewat details:")
+        for khewat in document.khewats:
+            khasra_count = sum(len(kh.khasras) for kh in khewat.khataunis)
+            print(f"- Khewat {khewat.khewat_number}: owners={len(khewat.owners)}, khataunis={len(khewat.khataunis)}, khasras={khasra_count}")
+            if khewat.owners:
+                owner_names = [o.normalized_owner_name or o.raw_owner_name_parentage for o in khewat.owners]
+                owner_names = owner_names[:3]
+                print(f"  Owners: {', '.join(owner_names)}{('...' if len(khewat.owners) > 3 else '')}")
+
+
+def _run_extract(argv: list[str]) -> int:
     parser_cli = argparse.ArgumentParser(
         description="Extract a Punjab Fard/Jamabandi into structured JSON and run the axiom gates."
     )
@@ -42,7 +88,7 @@ def main() -> int:
         "--batch-size", type=int, default=3,
         help="Number of pages to extract concurrently per batch (default: %(default)s).",
     )
-    args = parser_cli.parse_args()
+    args = parser_cli.parse_args(argv)
 
     adapter = MyLLMAdapter(model_name=args.model)
     extraction_parser = FardExtractionParser(llm_client=adapter, batch_size=args.batch_size)
@@ -70,3 +116,30 @@ def main() -> int:
         print("\n--- WARNINGS ---")
         print("\n".join(result.page_warnings))
     return 0
+
+
+def _run_report(argv: list[str]) -> int:
+    parser_cli = argparse.ArgumentParser(
+        description="Print a human-readable summary of a saved digital_patwari_document.json file."
+    )
+    parser_cli.add_argument(
+        "document_path",
+        help="Path to a saved digital_patwari_document.json file.",
+    )
+    args = parser_cli.parse_args(argv)
+    document_path = Path(args.document_path)
+    document = _load_document_from_json(document_path)
+    _print_document_summary(document)
+    return 0
+
+
+def main(argv: list[str] | None = None) -> int:
+    if load_dotenv is not None:
+        load_dotenv()
+
+    if argv is None:
+        argv = sys.argv[1:]
+
+    if len(argv) > 0 and argv[0] == "report":
+        return _run_report(argv[1:])
+    return _run_extract(argv)

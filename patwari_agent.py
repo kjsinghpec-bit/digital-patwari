@@ -122,8 +122,7 @@ from digital_patwari.validation import (
     validate_ag06_area_observation_scopes,
     validate_ag07_parcel_interest_resolution,
 )
+from digital_patwari.cli import main
 
 if __name__ == "__main__":
-    from digital_patwari.cli import main
-
     raise SystemExit(main())
