@@ -29,6 +29,13 @@ Structural relationship rules:
    the source for that Khewat/Khatauni (e.g. "45", "12") -- this is distinct from the internal KHW-1/KHT-1 ID
    and must reflect the source's own numbering exactly, since it is how the same Khewat/Khatauni spanning
    multiple pages gets recognized as one entity.
+1b. A visually blank Column 1 is meaningful. When its ruled table cell continues from a preceding page,
+    emit a Khewat container with khewat_number=null and continued_from_previous_page=true, and place that
+    page's Khataunis, owners, Khasras and observations inside it. Do NOT copy Column 2 into Column 1:
+    for example, under the continuing printed Khewat "198/185", values "219" and "220" in Column 2 are
+    Khatauni numbers, never Khewat numbers. Preserve the complete slash-pair "198/185"; do not discard the
+    previous-Jamabandi component. Set continued_from_previous_page only when the table geometry supports
+    continuation; if there is no visible or preceding context, mark the reading uncertain instead.
 2. Preserve every identifier as text. Never convert identifiers to numbers.
 3. Preserve original text in `raw_` fields exactly as seen, without cleaning or fixing typos.
 4. If text is illegible, use the visible raw text when possible and mark status as ILLEGIBLE.
