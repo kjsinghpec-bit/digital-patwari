@@ -338,10 +338,14 @@ class Khatauni(BaseModel):
 class Khewat(BaseModel):
     model_config = ConfigDict(extra="forbid")
     khewat_id: NonEmptyString
-    # Printed Khewat number from the source, e.g. "45". Separate from
-    # khewat_id (the internal deterministic ID, e.g. "KHW-1") -- this is
-    # the business key used to match the same Khewat across pages.
-    khewat_number: NonEmptyString
+    # Printed Khewat number from Column 1, preserving the complete source
+    # identifier (for example "198/185"). On a page where Column 1 is blank
+    # because the table block continues from the preceding page, extraction
+    # must set this to None and continued_from_previous_page to True. The
+    # deterministic document merge resolves that placeholder; it must never
+    # copy a Column-2 Khatauni number into this field.
+    khewat_number: NonEmptyString | None = None
+    continued_from_previous_page: bool = False
     owner_group_ref: str | None = None
     raw_total_share: NonEmptyString = "1/1"
     total_share: NonEmptyString = "1/1"
