@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Digital Patwari — Demo</title>
+<style>
+  :root{
+    --bg: #f4f6f3;
+    --paper: #ffffff;
+    --ink: #1c2420;
+    --ink-soft: #55625b;
+    --ink-faint: #8b968f;
+    --line: #e2e7e0;
+    --brand: #1f5f4a;
+    --brand-dark: #163f32;
+    --brand-soft: #e7f2ec;
+    --accent: #b8863b;
+    --accent-soft: #fbf1e0;
+    --good: #1f7a4d;
+    --good-soft: #e6f5ec;
+    --warn: #9a5b00;
+    --warn-soft: #fff2d9;
+    --warn-line: #f0c469;
+    --info: #2b5f8a;
+    --info-soft: #eaf3fa;
+    --radius: 14px;
+    --shadow: 0 1px 2px rgba(20,30,25,0.04), 0 6px 20px rgba(20,30,25,0.06);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:920px;margin:0 auto;padding:0 20px 80px;}
+  a{color:inherit;}
+
+  /* ---------- header ---------- */
+  header.hero{
+    background:linear-gradient(135deg,var(--brand) 0%,var(--brand-dark) 100%);
+    color:#fff;
+    padding:44px 20px 40px;
+  }
+  .hero-inner{max-width:920px;margin:0 auto;}
+  .brandrow{display:flex;align-items:center;gap:12px;margin-bottom:18px;}
+  .brandmark{
+    width:40px;height:40px;border-radius:10px;
+    background:rgba(255,255,255,0.16);
+    display:flex;align-items:center;justify-content:center;
+    font-size:20px;
+  }
+  .brandname{font-size:15px;font-weight:600;letter-spacing:0.02em;opacity:0.92;}
+  .demo-pill{
+    margin-left:auto;
+    background:rgba(255,255,255,0.16);
+    border:1px solid rgba(255,255,255,0.3);
+    padding:5px 12px;border-radius:999px;
+    font-size:12px;font-weight:600;letter-spacing:0.04em;
+  }
+  h1.title{font-size:34px;margin:6px 0 8px;font-weight:700;letter-spacing:-0.01em;}
+  p.tagline{font-size:17px;margin:0;opacity:0.88;max-width:480px;}
+
+  /* ---------- generic section ---------- */
+  section{margin-top:34px;}
+  .section-head{display:flex;align-items:baseline;gap:10px;margin-bottom:14px;flex-wrap:wrap;}
+  .section-head h2{font-size:19px;margin:0;font-weight:700;}
+  .section-head .sub{font-size:13px;color:var(--ink-faint);}
+  .card{
+    background:var(--paper);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:22px;
+  }
+
+  /* ---------- upload ---------- */
+  .upload-card{
+    border:2px dashed #c7d3cb;
+    border-radius:var(--radius);
+    background:var(--paper);
+    padding:30px 22px;
+    text-align:center;
+    position:relative;
+  }
+  .upload-card .demo-tag{
+    position:absolute; top:14px; right:14px;
+    background:var(--warn-soft); color:var(--warn);
+    border:1px solid var(--warn-line);
+    font-size:11px; font-weight:700; letter-spacing:0.05em;
+    padding:4px 9px; border-radius:999px;
+  }
+  .upload-icon{font-size:32px;margin-bottom:8px;}
+  .upload-card h3{margin:0 0 4px;font-size:16px;}
+  .upload-card p{margin:0 0 16px;color:var(--ink-soft);font-size:14px;}
+  .upload-btn{
+    display:inline-flex;align-items:center;gap:8px;
+    background:var(--brand);color:#fff;border:none;
+    padding:11px 20px;border-radius:10px;font-size:14px;font-weight:600;
+    cursor:pointer;
+  }
+  .upload-btn:hover{background:var(--brand-dark);}
+  .file-chip{
+    margin-top:16px;display:inline-flex;align-items:center;gap:8px;
+    background:var(--brand-soft);color:var(--brand-dark);
+    border:1px solid #cfe3d8;
+    padding:8px 14px;border-radius:10px;font-size:13px;font-weight:600;
+  }
+  .toast{
+    display:none;
+    margin-top:14px;font-size:12.5px;color:var(--ink-faint);
+  }
+
+  /* ---------- record header ---------- */
+  .record-header{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:14px;
+  }
+  .field{background:var(--bg);border-radius:10px;padding:12px 14px;}
+  .field .k{font-size:11px;text-transform:uppercase;letter-spacing:0.06em;color:var(--ink-faint);margin-bottom:3px;}
+  .field .v{font-size:15px;font-weight:600;}
+
+  /* ---------- hierarchy ---------- */
+  .tree{display:flex;flex-direction:column;gap:10px;}
+  .tree-khewat{
+    border:1px solid var(--line);border-radius:12px;padding:16px;background:var(--brand-soft);
+  }
+  .tree-khewat .label{font-size:12px;font-weight:700;color:var(--brand-dark);letter-spacing:0.03em;text-transform:uppercase;}
+  .tree-khewat .id{font-size:18px;font-weight:700;margin-top:2px;}
+  .tree-children{margin-top:12px;display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  .tree-kt{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:12px 14px;}
+  .tree-kt .tag{font-size:11px;font-weight:700;color:var(--ink-faint);letter-spacing:0.04em;text-transform:uppercase;}
+  .tree-kt .name{font-weight:700;margin:2px 0 6px;}
+  .tree-kt .meta{font-size:12.5px;color:var(--ink-soft);}
+  .kh-list{margin-top:8px;display:flex;flex-wrap:wrap;gap:6px;}
+  .kh-chip{
+    font-size:12px;background:var(--bg);border:1px solid var(--line);
+    padding:3px 9px;border-radius:999px;font-weight:600;
+  }
+
+  /* ---------- tables ---------- */
+  table{width:100%;border-collapse:collapse;font-size:13.5px;}
+  th{
+    text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:0.05em;
+    color:var(--ink-faint);font-weight:700;padding:8px 10px;border-bottom:1px solid var(--line);
+  }
+  td{padding:11px 10px;border-bottom:1px solid var(--line);vertical-align:top;}
+  tr:last-child td{border-bottom:none;}
+  .owner-name{font-weight:600;}
+  .owner-sub{font-size:12px;color:var(--ink-faint);}
+
+  .badge{
+    display:inline-flex;align-items:center;gap:5px;
+    font-size:11px;font-weight:700;letter-spacing:0.02em;
+    padding:3px 9px;border-radius:999px;white-space:nowrap;
+  }
+  .badge.good{background:var(--good-soft);color:var(--good);}
+  .badge.warn{background:var(--warn-soft);color:var(--warn);border:1px solid var(--warn-line);}
+  .badge.info{background:var(--info-soft);color:var(--info);}
+  .badge.accent{background:var(--accent-soft);color:#8a5a1c;}
+
+  /* ---------- double-count proof ---------- */
+  .proof{
+    display:grid;grid-template-columns:1fr 1fr;gap:16px;
+  }
+  .proof-box{border-radius:12px;padding:18px;border:1px solid var(--line);}
+  .proof-box.correct{background:var(--good-soft);border-color:#bfe3cd;}
+  .proof-box.wrong{background:#fbeceb;border-color:#f2c9c6;}
+  .proof-box .tag{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;}
+  .proof-box.correct .tag{color:var(--good);}
+  .proof-box.wrong .tag{color:#a13c36;}
+  .proof-box .num{font-size:26px;font-weight:700;margin:8px 0 4px;}
+  .proof-box.wrong .num{text-decoration:line-through;color:#a13c36;opacity:0.85;}
+  .proof-box .desc{font-size:12.5px;color:var(--ink-soft);}
+  .proof-note{
+    margin-top:14px;font-size:13px;color:var(--ink-soft);
+    background:var(--bg);border-radius:10px;padding:12px 14px;
+  }
+
+  /* ---------- mutation card ---------- */
+  .mutation-card{border-radius:12px;border:1px solid var(--line);padding:16px 18px;background:var(--paper);}
+  .mutation-top{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px;}
+  .mutation-text{font-size:14px;color:var(--ink);}
+  .mutation-meta{margin-top:8px;font-size:12.5px;color:var(--ink-faint);}
+
+  .remark-card{border-radius:12px;border:1px solid var(--line);padding:14px 16px;background:var(--bg);font-size:13.5px;}
+  .remark-quote{font-style:italic;color:var(--ink);}
+  .remark-meaning{margin-top:6px;color:var(--ink-soft);font-size:12.5px;}
+
+  /* ---------- Q&A ---------- */
+  .qa{display:flex;flex-direction:column;gap:16px;}
+  .qa-card{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--paper);box-shadow:var(--shadow);}
+  .qa-q{
+    background:var(--brand);color:#fff;padding:14px 18px;font-weight:600;font-size:14.5px;
+    display:flex;align-items:center;gap:10px;
+  }
+  .qa-q .qmark{
+    width:22px;height:22px;border-radius:50%;background:rgba(255,255,255,0.2);
+    display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0;
+  }
+  .qa-body{padding:16px 18px 18px;}
+  .qa-row{display:grid;grid-template-columns:150px 1fr;gap:10px;padding:9px 0;border-bottom:1px solid var(--line);}
+  .qa-row:last-child{border-bottom:none;}
+  .qa-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;color:var(--ink-faint);padding-top:2px;}
+  .qa-value{font-size:13.5px;color:var(--ink);}
+  .qa-value.muted{color:var(--ink-faint);font-style:italic;}
+  .verify-banner{
+    margin-top:14px;
+    background:var(--warn-soft);border:1px solid var(--warn-line);color:var(--warn);
+    border-radius:10px;padding:10px 14px;font-size:13px;font-weight:600;
+    display:flex;align-items:center;gap:8px;
+  }
+
+  /* ---------- system checks ---------- */
+  .checks{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  .check-item{
+    display:flex;align-items:center;gap:10px;
+    background:var(--good-soft);border:1px solid #bfe3cd;
+    border-radius:10px;padding:11px 14px;font-size:13.5px;font-weight:600;color:var(--brand-dark);
+  }
+  .check-item .mark{color:var(--good);font-size:15px;}
+  .check-item.tests{background:var(--brand-soft);grid-column:1 / -1;justify-content:center;font-size:14.5px;}
+
+  /* ---------- disclaimer ---------- */
+  .disclaimer{
+    margin-top:40px;
+    background:var(--warn-soft);border:1px solid var(--warn-line);
+    border-radius:12px;padding:16px 18px;
+    display:flex;gap:12px;align-items:flex-start;
+  }
+  .disclaimer .icon{font-size:18px;}
+  .disclaimer strong{color:var(--warn);}
+  .disclaimer p{margin:4px 0 0;font-size:13px;color:#6b4b12;}
+
+  footer{
+    text-align:center;color:var(--ink-faint);font-size:12px;margin-top:26px;
+  }
+
+  @media (max-width:640px){
+    .record-header{grid-template-columns:1fr 1fr;}
+    .tree-children{grid-template-columns:1fr;}
+    .proof{grid-template-columns:1fr;}
+    .qa-row{grid-template-columns:1fr;}
+    .checks{grid-template-columns:1fr;}
+    h1.title{font-size:27px;}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-inner">
+    <div class="brandrow">
+      <div class="brandmark">🗺️</div>
+      <div class="brandname">DIGITAL PATWARI</div>
+      <div class="demo-pill">PRODUCT DEMO</div>
+    </div>
+    <h1 class="title">Digital Patwari</h1>
+    <p class="tagline">Understand your Punjab land record in simple language.</p>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <!-- 1. UPLOAD -->
+  <section>
+    <div class="section-head">
+      <h2>Upload your Fard</h2>
+      <span class="sub">Step 1 of the product flow</span>
+    </div>
+    <div class="upload-card">
+      <div class="demo-tag">DEMO SCREEN — NOT LIVE</div>
+      <div class="upload-icon">📄</div>
+      <h3>Drop a Fard / Jamabandi PDF or photo here</h3>
+      <p>Supports PDF, PNG, JPG. This screen is a mockup — no file is actually processed here.</p>
+      <button class="upload-btn" onclick="document.getElementById('demoToast').style.display='block'">
+        📤 Upload PDF / Images
+      </button>
+      <div>
+        <div class="file-chip">✅ demo_fard_sample.pdf — synthetic sample data loaded below</div>
+      </div>
+      <div class="toast" id="demoToast">This button is for show — it re-loads the same sample analysis below. Real upload → Gemini extraction is not wired into this demo page.</div>
+    </div>
+  </section>
+
+  <!-- 2. RECORD HEADER -->
+  <section>
+    <div class="section-head">
+      <h2>Fard Summary</h2>
+      <span class="sub">From the synthetic sample record</span>
+    </div>
+    <div class="card">
+      <div class="record-header">
+        <div class="field"><div class="k">Village</div><div class="v">Sanghol</div></div>
+        <div class="field"><div class="k">Hadbast No.</div><div class="v">142</div></div>
+        <div class="field"><div class="k">Jamabandi Year</div><div class="v">2020–21</div></div>
+        <div class="field"><div class="k">District</div><div class="v">Fatehgarh Sahib</div></div>
+        <div class="field"><div class="k">Tehsil</div><div class="v">Khamano</div></div>
+        <div class="field"><div class="k">Validation</div><div class="v" style="color:var(--good)">✓ Passed (AG-01/02/03)</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. HIERARCHY: Khewat -> Khatauni -> Khasra -->
+  <section>
+    <div class="section-head">
+      <h2>Khewat → Khatauni → Khasra</h2>
+      <span class="sub">The record's real structure, kept distinct — nothing is flattened</span>
+    </div>
+    <div class="card">
+      <div class="tree">
+        <div class="tree-khewat">
+          <div class="label">Khewat</div>
+          <div class="id">KHW-1 — Total area 8 Kanal 10 Marla 0 Sarsahi</div>
+          <div class="tree-children">
+            <div class="tree-kt">
+              <div class="tag">Khatauni</div>
+              <div class="name">KHT-1</div>
+              <div class="meta">Khud Kasht (self-cultivated) · Recorded area 5 Kanal 0 Marla</div>
+              <div class="kh-list">
+                <span class="kh-chip">Khasra 17 · 3-0 · Chahi</span>
+                <span class="kh-chip">Khasra 18 · 2-0 · Barani</span>
+              </div>
+            </div>
+            <div class="tree-kt">
+              <div class="tag">Khatauni</div>
+              <div class="name">KHT-2</div>
+              <div class="meta">Muzara (tenant: Kishan) · Recorded area 3 Kanal 10 Marla</div>
+              <div class="kh-list">
+                <span class="kh-chip">Khasra 22 · 2-5 · Nehri</span>
+                <span class="kh-chip">Khasra 23 · 1-5 · Nehri</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. OWNERS TABLE -->
+  <section>
+    <div class="section-head">
+      <h2>Owners &amp; Shares</h2>
+      <span class="sub">3 owners detected under Khewat KHW-1</span>
+    </div>
+    <div class="card" style="padding:0;overflow:hidden;">
+      <table>
+        <thead>
+          <tr><th>Owner</th><th>Share</th><th>Calculated land</th><th>Status</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><div class="owner-name">Chaman Lal</div><div class="owner-sub">s/o Sohan Lal</div></td>
+            <td>1/2</td>
+            <td>4 Kanal 5 Marla 0 Sarsahi</td>
+            <td><span class="badge warn">⚠ Verification required</span></td>
+          </tr>
+          <tr>
+            <td><div class="owner-name">Ram Lal</div><div class="owner-sub">s/o Sohan Lal</div></td>
+            <td>1/4</td>
+            <td>2 Kanal 2 Marla 4 Sarsahi</td>
+            <td><span class="badge good">✓ As recorded, active</span></td>
+          </tr>
+          <tr>
+            <td><div class="owner-name">Ki[smudged]an Lal</div><div class="owner-sub">s/o Sohan Lal — name partly illegible in scan</div></td>
+            <td>1/4</td>
+            <td><span class="qa-value muted">Not calculated</span></td>
+            <td><span class="badge warn">⚠ Uncertain reading</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 5. DOUBLE-COUNT PROOF -->
+  <section>
+    <div class="section-head">
+      <h2>Multi-Khatauni protection</h2>
+      <span class="sub">This Khewat has 2 Khataunis — proving the area was not counted twice</span>
+    </div>
+    <div class="card">
+      <div class="proof">
+        <div class="proof-box correct">
+          <div class="tag">✓ Correct total (what Digital Patwari reports)</div>
+          <div class="num">8 Kanal 10 Marla</div>
+          <div class="desc">Each Khatauni's own recorded area counted exactly once: 5-0-0 (KHT-1) + 3-10-0 (KHT-2).</div>
+        </div>
+        <div class="proof-box wrong">
+          <div class="tag">✗ Naive incorrect result avoided</div>
+          <div class="num">17 Kanal 0 Marla</div>
+          <div class="desc">What a buggy system would show if it multiplied the whole Khewat area by its 2 Khataunis instead of summing them once.</div>
+        </div>
+      </div>
+      <div class="proof-note">
+        Digital Patwari's validation layer (AG-03) checks this down to the Sarsahi for every Khatauni in a Khewat — a Khewat's area is never inferred by multiplying, only by summing each Khatauni's own recorded area exactly once.
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. MUTATIONS -->
+  <section>
+    <div class="section-head">
+      <h2>Mutations / Intqals</h2>
+      <span class="sub">1 mutation detected</span>
+    </div>
+    <div class="mutation-card">
+      <div class="mutation-top">
+        <span class="badge good">✓ Approved / Sanctioned</span>
+        <span class="badge accent">Sale</span>
+        <span class="badge info">Specific Khasra (No. 17)</span>
+      </div>
+      <div class="mutation-text">“Mutation No. 245: Chaman Lal sold Khasra No. 17 (3 Kanal) to Ram Lal, sanctioned 12-03-2021.”</div>
+      <div class="mutation-meta">Targets owner: Chaman Lal · Effect: an <strong>approved</strong> mutation may change active ownership — Digital Patwari flags Chaman Lal's land figure above for verification rather than silently updating it.</div>
+    </div>
+  </section>
+
+  <!-- 7. COLUMN 8 / REMARKS -->
+  <section>
+    <div class="section-head">
+      <h2>Column 8 / Remarks</h2>
+      <span class="sub">1 remark on this Khewat</span>
+    </div>
+    <div class="remark-card">
+      <div class="remark-quote">“Column 8 note: field boundary re-verified by Patwari during 2019 girdawari.”</div>
+      <div class="remark-meaning">Informational — no effect on ownership or mutation status.</div>
+    </div>
+  </section>
+
+  <!-- 8. ASK DIGITAL PATWARI -->
+  <section>
+    <div class="section-head">
+      <h2>Ask Digital Patwari</h2>
+      <span class="sub">Simulated questions, answered only from the validated record — never guessed</span>
+    </div>
+    <div class="qa">
+
+      <!-- Q1 -->
+      <div class="qa-card">
+        <div class="qa-q"><span class="qmark">?</span>Who owns this land?</div>
+        <div class="qa-body">
+          <div class="qa-row"><div class="qa-label">Record says</div><div class="qa-value">Chaman Lal (1/2), Ram Lal (1/4), Ki[smudged]an Lal (1/4) — all under Khewat KHW-1.</div></div>
+          <div class="qa-row"><div class="qa-label">Calculated</div><div class="qa-value">3 owner records, shares sum exactly to 1/1.</div></div>
+          <div class="qa-row"><div class="qa-label">Interpretation</div><div class="qa-value muted">None needed — this is a direct listing.</div></div>
+          <div class="qa-row"><div class="qa-label">Evidence</div><div class="qa-value">Page 1, ownership column (Column 3/4).</div></div>
+          <div class="qa-row"><div class="qa-label">Confidence</div><div class="qa-value">High for 2 of 3 owners.</div></div>
+          <div class="qa-row"><div class="qa-label">Verification required</div><div class="qa-value" style="color:var(--warn);font-weight:600;">Yes — one owner's name is partly illegible in the scan.</div></div>
+          <div class="verify-banner">⚠ Needs verification: “Ki[smudged]an Lal” — the scan is unclear here. Digital Patwari will not guess the missing letters.</div>
+        </div>
+      </div>
+
+      <!-- Q2 -->
+      <div class="qa-card">
+        <div class="qa-q"><span class="qmark">?</span>How much land does Chaman Lal have?</div>
+        <div class="qa-body">
+          <div class="qa-row"><div class="qa-label">Record says</div><div class="qa-value">Chaman Lal holds 1/2 share of Khewat KHW-1 (total 8 Kanal 10 Marla).</div></div>
+          <div class="qa-row"><div class="qa-label">Calculated</div><div class="qa-value">1/2 × 8 Kanal 10 Marla = <strong>4 Kanal 5 Marla 0 Sarsahi</strong> (exact fraction math, not estimated).</div></div>
+          <div class="qa-row"><div class="qa-label">Interpretation</div><div class="qa-value">An approved mutation (sale of Khasra 17) is recorded against Chaman Lal — active ownership may now differ from this Fard row.</div></div>
+          <div class="qa-row"><div class="qa-label">Evidence</div><div class="qa-value">Page 1, owner row + Khewat header; Mutation No. 245.</div></div>
+          <div class="qa-row"><div class="qa-label">Confidence</div><div class="qa-value">High (for the figure as recorded).</div></div>
+          <div class="qa-row"><div class="qa-label">Verification required</div><div class="qa-value" style="color:var(--warn);font-weight:600;">Yes — approved mutation may supersede this figure.</div></div>
+          <div class="verify-banner">⚠ Needs verification: this is the correct “as recorded” figure, but a sanctioned mutation exists — confirm current ownership before relying on it.</div>
+        </div>
+      </div>
+
+      <!-- Q3 -->
+      <div class="qa-card">
+        <div class="qa-q"><span class="qmark">?</span>Has any land been sold?</div>
+        <div class="qa-body">
+          <div class="qa-row"><div class="qa-label">Record says</div><div class="qa-value">Mutation No. 245: Chaman Lal sold Khasra No. 17 (3 Kanal) to Ram Lal, sanctioned 12-03-2021.</div></div>
+          <div class="qa-row"><div class="qa-label">Calculated</div><div class="qa-value muted">Not applicable — this is a categorical fact, not a number.</div></div>
+          <div class="qa-row"><div class="qa-label">Interpretation</div><div class="qa-value">This was a <strong>specific-Khasra transfer</strong> (Khasra 17 only), not a transfer of an undivided share of the whole Khewat.</div></div>
+          <div class="qa-row"><div class="qa-label">Evidence</div><div class="qa-value">Page 1, Column 8 / Inteqal entry.</div></div>
+          <div class="qa-row"><div class="qa-label">Confidence</div><div class="qa-value">High — mutation entry is clearly legible and sanctioned.</div></div>
+          <div class="qa-row"><div class="qa-label">Verification required</div><div class="qa-value">No — this answer simply reports the mutation as recorded.</div></div>
+        </div>
+      </div>
+
+      <!-- Q4 -->
+      <div class="qa-card">
+        <div class="qa-q"><span class="qmark">?</span>Explain this Fard simply.</div>
+        <div class="qa-body">
+          <div class="qa-row"><div class="qa-label">Record says</div>
+            <div class="qa-value">Village Sanghol (Hadbast 142), Jamabandi year 2020–21. This Fard records 1 Khewat with 3 owners and a total area of 8 Kanal 10 Marla. There is 1 approved mutation and 0 pending mutations.</div>
+          </div>
+          <div class="qa-row"><div class="qa-label">Calculated</div><div class="qa-value muted">Summary only — see the individual answers above for figures.</div></div>
+          <div class="qa-row"><div class="qa-label">Interpretation</div><div class="qa-value">The record is internally consistent (all checks passed), but one owner's identity and Chaman Lal's current share both need a human to confirm before acting on them.</div></div>
+          <div class="qa-row"><div class="qa-label">Evidence</div><div class="qa-value">Whole document (all pages).</div></div>
+          <div class="qa-row"><div class="qa-label">Confidence</div><div class="qa-value">High for structure, mixed for the two flagged fields.</div></div>
+          <div class="qa-row"><div class="qa-label">Verification required</div><div class="qa-value">Partially — see the two flagged items above.</div></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 9. SYSTEM CHECKS -->
+  <section>
+    <div class="section-head">
+      <h2>System checks</h2>
+      <span class="sub">What's actually been verified behind this screen</span>
+    </div>
+    <div class="card">
+      <div class="checks">
+        <div class="check-item"><span class="mark">✓</span> Schema validation</div>
+        <div class="check-item"><span class="mark">✓</span> Share calculation</div>
+        <div class="check-item"><span class="mark">✓</span> Mutation reconciliation</div>
+        <div class="check-item"><span class="mark">✓</span> Multi-Khatauni double-count protection</div>
+        <div class="check-item"><span class="mark">✓</span> Query / abstention logic</div>
+        <div class="check-item tests"><span class="mark">✓</span>&nbsp;70 / 70 automated tests passing</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10. DISCLAIMER -->
+  <div class="disclaimer">
+    <div class="icon">ℹ️</div>
+    <div>
+      <strong>Demo based on synthetic test data.</strong>
+      <p>Real Punjabi Fard image/PDF extraction has not yet been validated. This screen demonstrates the validation, reconciliation, and question-answering logic once structured data exists — not the accuracy of reading a real scanned Fard.</p>
+    </div>
+  </div>
+
+  <footer>Digital Patwari — internal product demo · generated from tested synthetic data, not a real land record</footer>
+
+</div>
+
+</body>
+</html>

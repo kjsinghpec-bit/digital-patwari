@@ -1,0 +1,39 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//Users/karamjot/**)",
+      "Read(//Users/karamjot/.claude/plugins/**)",
+      "Read(//Users/karamjot/.claude/**)",
+      "Bash(cp -n /Users/karamjot/Desktop/Digital_/patwari_agent.py /Users/karamjot/Desktop/Digital_/generate_schema.py /Users/karamjot/Desktop/DigitalPatwari/)",
+      "Bash(cp -n /Users/karamjot/Desktop/Digital_/fard_*.png /Users/karamjot/Desktop/DigitalPatwari/samples/)",
+      "Bash(python3 -m py_compile patwari_agent.py)",
+      "Bash(python3 -c \"import google.genai\")",
+      "Bash(python3 -c \"from google.genai import types; print\\(hasattr\\(types, 'HttpOptions'\\)\\)\")",
+      "Bash(python3 -c \"import pytest\")",
+      "Bash(python3 -m pip install --quiet pytest)",
+      "Bash(python3 -c \"import pytest; print\\(pytest.__version__\\)\")",
+      "Bash(python3 -m venv .venv)",
+      "Bash(.venv/bin/pip install *)",
+      "Bash(.venv/bin/python -m pytest tests/ -q)",
+      "Bash(python3 -m py_compile digital_patwari/*.py digital_patwari/providers/*.py patwari_agent.py)",
+      "Skill(gstack)",
+      "Skill(gstack:*)",
+      "Bash(.venv/bin/python scripts/demo_synthetic_fard.py)",
+      "Bash(echo \"exit: $?\")",
+      "Read(//tmp/**)",
+      "Bash(python3 -m py_compile digital_patwari/query.py)",
+      "Bash(.venv/bin/python scripts/demo_synthetic_fard.py > /tmp/demo_output2.txt 2>&1; echo \"exit: $?\"; diff /tmp/demo_output.txt /tmp/demo_output2.txt)",
+      "Bash(python3 -c ' *)",
+      "Bash(.venv/bin/python3 -c ' *)",
+      "Bash(.venv/bin/python scripts/real_fard_manual_reading.py)",
+      "Bash(.venv/bin/python -m pytest tests/test_khatauni_scoped_ownership.py -v)",
+      "Bash(python3 -m py_compile digital_patwari/*.py)",
+      "Bash(.venv/bin/python -m pytest tests/test_ownership_inheritance.py -v)",
+      "Bash(.venv/bin/python -m pytest tests/ -v)",
+      "Bash(.venv/bin/python -c ' *)",
+      "Bash(python3 -m py_compile tests/factories.py)",
+      "Bash(.venv/bin/python -m pytest tests/test_area_unit_conversion.py tests/test_ag04_document_completeness.py tests/test_mortgage_status.py tests/test_domain_regression_suite.py -v)",
+      "Bash(echo \"exit:$?\")"
+    ]
+  }
+}
