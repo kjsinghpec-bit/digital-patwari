@@ -1,6 +1,7 @@
 from __future__ import annotations
 
-from dataclasses import dataclass
+import asyncio
+from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, Protocol
 
@@ -8,6 +9,7 @@ import pydantic
 from pydantic import BaseModel
 
 from digital_patwari.document_io import load_document_parts
+from digital_patwari.merge import merge_page_documents
 from digital_patwari.models import DigitalPatwariDocument
 from digital_patwari.validation import ValidationReport, run_axiom_gates
 
@@ -23,6 +25,10 @@ Reading process -- follow this order, do not skip steps:
 
 Structural relationship rules:
 1. Generate deterministic string IDs based on position (e.g., KHW-1, KHT-1, OWN-1, KHS-1). Never use random UUIDs.
+   Separately, always set Khewat.khewat_number and Khatauni.khatauni_number to the actual number PRINTED in
+   the source for that Khewat/Khatauni (e.g. "45", "12") -- this is distinct from the internal KHW-1/KHT-1 ID
+   and must reflect the source's own numbering exactly, since it is how the same Khewat/Khatauni spanning
+   multiple pages gets recognized as one entity.
 2. Preserve every identifier as text. Never convert identifiers to numbers.
 3. Preserve original text in `raw_` fields exactly as seen, without cleaning or fixing typos.
 4. If text is illegible, use the visible raw text when possible and mark status as ILLEGIBLE.
@@ -107,6 +113,10 @@ class ExtractionResult:
     validation_report: ValidationReport | None
     raw_llm_output: dict[str, Any] | str | None
     parser_errors: list[str]
+    # Non-fatal issues that don't prevent a document from being produced:
+    # a page that failed extraction while other pages still succeeded, or a
+    # document_header disagreement noticed while merging pages together.
+    page_warnings: list[str] = field(default_factory=list)
 
     @property
     def succeeded(self) -> bool:
@@ -114,25 +124,71 @@ class ExtractionResult:
 
 
 class FardExtractionParser:
-    def __init__(self, llm_client: StructuredLLMClient, *, marla_per_kanal: int = 20, sarsahi_per_marla: int = 9, area_tolerance_marla: int = 0) -> None:
+    def __init__(
+        self,
+        llm_client: StructuredLLMClient,
+        *,
+        marla_per_kanal: int = 20,
+        sarsahi_per_marla: int = 9,
+        area_tolerance_marla: int = 0,
+        batch_size: int = 3,
+    ) -> None:
         self.llm_client = llm_client
         self.marla_per_kanal = marla_per_kanal
         self.sarsahi_per_marla = sarsahi_per_marla
         self.area_tolerance_marla = area_tolerance_marla
+        self.batch_size = batch_size
 
     def extract(self, document_paths: list[str | Path]) -> ExtractionResult:
+        return asyncio.run(self._extract_async(document_paths))
+
+    async def _extract_async(self, document_paths: list[str | Path]) -> ExtractionResult:
         document_parts = load_document_parts(document_paths)
-        user_prompt = "Extract the attached Fard/Jamabandi pages conforming to the exact schema."
-        raw_output = None
+        user_prompt = "Extract the attached Fard/Jamabandi page conforming to the exact schema."
+
+        numbered_parts = list(enumerate(document_parts, start=1))
+        page_results: dict[int, DigitalPatwariDocument] = {}
+        page_warnings: list[str] = []
+
+        for batch_start in range(0, len(numbered_parts), self.batch_size):
+            batch = numbered_parts[batch_start:batch_start + self.batch_size]
+            outcomes = await asyncio.gather(
+                *(self._extract_one_page(page_number, part, user_prompt) for page_number, part in batch)
+            )
+            for page_number, document, error in outcomes:
+                if document is not None:
+                    page_results[page_number] = document
+                else:
+                    page_warnings.append(f"page {page_number}: {error}")
+
+        if not page_results:
+            return ExtractionResult(None, None, None, page_warnings or ["transport_error: no pages extracted"])
+
+        ordered_pages = [(page_number, page_results[page_number]) for page_number in sorted(page_results)]
+        merge_result = merge_page_documents(ordered_pages)
+        page_warnings.extend(merge_result.warnings)
+
+        report = run_axiom_gates(
+            merge_result.document,
+            marla_per_kanal=self.marla_per_kanal,
+            sarsahi_per_marla=self.sarsahi_per_marla,
+            area_tolerance_marla=self.area_tolerance_marla,
+        )
+        return ExtractionResult(merge_result.document, report, None, [], page_warnings)
+
+    async def _extract_one_page(
+        self, page_number: int, part: dict[str, Any], user_prompt: str
+    ) -> tuple[int, DigitalPatwariDocument | None, str | None]:
         try:
-            raw_output = self.llm_client.extract_structured(
+            raw_output = await asyncio.to_thread(
+                self.llm_client.extract_structured,
                 system_prompt=EXTRACTION_SYSTEM_PROMPT,
                 user_prompt=user_prompt,
-                document_parts=document_parts,
-                json_schema=DigitalPatwariDocument
+                document_parts=[part],
+                json_schema=DigitalPatwariDocument,
             )
         except Exception as exc:
-            return ExtractionResult(None, None, raw_output, [f"transport_error: {exc}"])
+            return page_number, None, f"transport_error: {exc}"
 
         try:
             document = (
@@ -141,18 +197,12 @@ class FardExtractionParser:
                 else DigitalPatwariDocument.model_validate(raw_output)
             )
         except pydantic.ValidationError as exc:
-            field_errors = [
-                f"{'.'.join(str(part) for part in err['loc'])}: {err['msg']}"
+            field_errors = "; ".join(
+                f"{'.'.join(str(loc_part) for loc_part in err['loc'])}: {err['msg']}"
                 for err in exc.errors()
-            ]
-            return ExtractionResult(None, None, raw_output, field_errors)
+            )
+            return page_number, None, field_errors
         except Exception as exc:
-            return ExtractionResult(None, None, raw_output, [f"parse_error: {exc}"])
+            return page_number, None, f"parse_error: {exc}"
 
-        report = run_axiom_gates(
-            document,
-            marla_per_kanal=self.marla_per_kanal,
-            sarsahi_per_marla=self.sarsahi_per_marla,
-            area_tolerance_marla=self.area_tolerance_marla,
-        )
-        return ExtractionResult(document, report, raw_output, [])
+        return page_number, document, None

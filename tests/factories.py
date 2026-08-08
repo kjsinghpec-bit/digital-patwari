@@ -66,6 +66,7 @@ def make_khasra(khasra_id: str, khatauni_id: str, kanal: int = 0, marla: int = 0
 def make_khatauni(khatauni_id: str, khewat_id: str, khasras=None, recorded_area=None, **overrides) -> Khatauni:
     fields = dict(
         khatauni_id=khatauni_id,
+        khatauni_number=khatauni_id,
         khewat_id=khewat_id,
         khasras=khasras or [],
         recorded_total_area=recorded_area,
@@ -77,6 +78,7 @@ def make_khatauni(khatauni_id: str, khewat_id: str, khasras=None, recorded_area=
 def make_khewat(khewat_id: str, owners=None, khataunis=None, total_share: str = "1/1", **overrides) -> Khewat:
     fields = dict(
         khewat_id=khewat_id,
+        khewat_number=khewat_id,
         raw_total_share=total_share,
         total_share=total_share,
         owners=owners or [],

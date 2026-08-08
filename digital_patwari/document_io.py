@@ -1,11 +1,42 @@
 from __future__ import annotations
 
 import base64
+import io
 import mimetypes
 from pathlib import Path
 from typing import Any
 
 SUPPORTED_MIME_TYPES = {"image/png", "image/jpeg", "image/webp", "application/pdf"}
+
+
+def _split_pdf_into_parts(path: Path) -> list[dict[str, Any]]:
+    try:
+        from pypdf import PdfReader, PdfWriter
+    except ImportError as exc:
+        raise RuntimeError(
+            "PDF support requires the 'pypdf' package. Install it with `pip install pypdf`."
+        ) from exc
+
+    reader = PdfReader(path)
+    if not reader.pages:
+        raise ValueError(f"PDF {path} contains no pages.")
+
+    parts: list[dict[str, Any]] = []
+    for page_number, page in enumerate(reader.pages, start=1):
+        writer = PdfWriter()
+        writer.add_page(page)
+        buffer = io.BytesIO()
+        writer.write(buffer)
+        buffer.seek(0)
+        encoded = base64.b64encode(buffer.read()).decode("ascii")
+        parts.append({
+            "filename": path.name,
+            "mime_type": "application/pdf",
+            "base64_data": encoded,
+            "page_number": page_number,
+            "source_path": str(path),
+        })
+    return parts
 
 
 def resolve_input_paths(inputs: list[str | Path]) -> list[Path]:
@@ -42,6 +73,9 @@ def load_document_parts(paths: list[str | Path]) -> list[dict[str, Any]]:
                 f"Unsupported file type for {path}: {mime_type!r}. "
                 f"Supported types: {sorted(SUPPORTED_MIME_TYPES)}"
             )
+        if mime_type == "application/pdf":
+            parts.extend(_split_pdf_into_parts(path))
+            continue
         encoded = base64.b64encode(path.read_bytes()).decode("ascii")
         parts.append({"filename": path.name, "mime_type": mime_type, "base64_data": encoded})
     return parts

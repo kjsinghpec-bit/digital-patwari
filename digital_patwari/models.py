@@ -309,6 +309,10 @@ class Khasra(BaseModel):
 class Khatauni(BaseModel):
     model_config = ConfigDict(extra="forbid")
     khatauni_id: NonEmptyString
+    # Printed Khatauni number from the source, e.g. "12". Separate from
+    # khatauni_id (the internal deterministic ID, e.g. "KHT-1") -- this is
+    # the business key used to match the same Khatauni across pages.
+    khatauni_number: NonEmptyString
     khewat_id: NonEmptyString
     raw_cultivator_name: str | None = None
     raw_possession_type: str | None = None
@@ -334,6 +338,10 @@ class Khatauni(BaseModel):
 class Khewat(BaseModel):
     model_config = ConfigDict(extra="forbid")
     khewat_id: NonEmptyString
+    # Printed Khewat number from the source, e.g. "45". Separate from
+    # khewat_id (the internal deterministic ID, e.g. "KHW-1") -- this is
+    # the business key used to match the same Khewat across pages.
+    khewat_number: NonEmptyString
     owner_group_ref: str | None = None
     raw_total_share: NonEmptyString = "1/1"
     total_share: NonEmptyString = "1/1"
