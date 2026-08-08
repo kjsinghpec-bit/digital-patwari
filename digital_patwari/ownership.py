@@ -1,7 +1,7 @@
 """Ownership resolution: Khewat-level default vs. Khatauni-level override.
 
 Domain rule (verified against a real Fard -- samples/real_fard/Chaman Lal
-Sanghol.pdf, Khewat 219, and generalized rather than hard-coded):
+Sanghol.pdf, Khewat 198/185 with Khatauni 219, and generalized rather than hard-coded):
 
 1. Khewat-level ownership (Owner.khatauni_id is None) is the DEFAULT. It
    applies to every Khatauni in that Khewat that has no owner row of its
