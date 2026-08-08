@@ -14,10 +14,12 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import sys
+from collections import Counter
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Iterable
+from typing import Any, Iterable
 
 from digital_patwari.models import (
     AreaKanalMarlaSarsahi,
@@ -68,11 +70,16 @@ def merge_page_documents(pages: list[tuple[int, DigitalPatwariDocument]]) -> Mer
     if not pages:
         raise ValueError("merge_page_documents requires at least one page")
 
+    # Callers and filesystem listings are not guaranteed to be in numeric
+    # page order. Continuation resolution is only meaningful in source order.
+    pages = sorted(pages, key=lambda item: item[0])
+
     warnings: list[str] = []
     id_map: _IdMap = {}
 
     document_header, layout, schema_version = _merge_document_header(pages, warnings)
-    merged_khewats, id_map = _merge_khewats(pages)
+    merged_khewats, id_map, continuation_warnings = _merge_khewats(pages)
+    warnings.extend(continuation_warnings)
 
     merged_mutations, mutation_id_map = _merge_mutations(pages, id_map)
     id_map.update(mutation_id_map)
@@ -113,17 +120,36 @@ def _merge_document_header(pages, warnings: list[str]):
     return header, first_doc.layout, first_doc.schema_version
 
 
-def _merge_khewats(pages) -> tuple[list[Khewat], _IdMap]:
+def _merge_khewats(pages) -> tuple[list[Khewat], _IdMap, list[str]]:
     id_map: _IdMap = {}
+    warnings: list[str] = []
 
+    # Resolve visually blank Column-1 cells as table continuations before
+    # grouping. This is stateful by design: a blank cell inherits only the
+    # nearest preceding explicit Khewat in source-page order. Column 2 is
+    # never considered, so a Khatauni such as 219 cannot become a Khewat.
     khewat_order: list[str] = []
     khewat_groups: dict[str, list[tuple[int, Khewat]]] = {}
+    active_khewat_number: str | None = None
     for page_number, doc in pages:
         for khewat in doc.khewats:
-            if khewat.khewat_number not in khewat_groups:
-                khewat_groups[khewat.khewat_number] = []
-                khewat_order.append(khewat.khewat_number)
-            khewat_groups[khewat.khewat_number].append((page_number, khewat))
+            printed_number = khewat.khewat_number
+            if printed_number is not None:
+                active_khewat_number = printed_number
+                resolved_number = printed_number
+            elif khewat.continued_from_previous_page and active_khewat_number is not None:
+                resolved_number = active_khewat_number
+            else:
+                warnings.append(
+                    f"page {page_number} has a blank Khewat continuation with "
+                    "no preceding printed Khewat; its nested rows were not merged"
+                )
+                continue
+
+            if resolved_number not in khewat_groups:
+                khewat_groups[resolved_number] = []
+                khewat_order.append(resolved_number)
+            khewat_groups[resolved_number].append((page_number, khewat))
 
     khatauni_counter = 0
     khasra_counter = 0
@@ -246,7 +272,7 @@ def _merge_khewats(pages) -> tuple[list[Khewat], _IdMap]:
             )
         )
 
-    return merged_khewats, id_map
+    return merged_khewats, id_map, warnings
 
 
 def _prefer_non_empty(old_value: str | None, new_value: str | None) -> str | None:
@@ -426,13 +452,53 @@ def _resolve_input_paths(input_path: Path) -> list[Path]:
     raise FileNotFoundError(input_path)
 
 
+def _infer_page_number_from_payload(payload: dict[str, Any]) -> int | None:
+    if isinstance(payload.get("page_number"), int):
+        return payload["page_number"]
+
+    page_numbers: list[int] = []
+
+    def collect_values(value: Any) -> None:
+        if isinstance(value, dict):
+            if isinstance(value.get("page_number"), int):
+                page_numbers.append(value["page_number"])
+            for child in value.values():
+                collect_values(child)
+        elif isinstance(value, list):
+            for item in value:
+                collect_values(item)
+
+    collect_values(payload)
+    if not page_numbers:
+        return None
+
+    most_common, _ = Counter(page_numbers).most_common(1)[0]
+    return most_common
+
+
+def _page_number_from_filename(path: Path) -> int | None:
+    matches = re.findall(r"\d+", path.stem)
+    if not matches:
+        return None
+    return int(matches[-1])
+
+
 def _load_documents(input_paths: list[Path]) -> list[tuple[int, DigitalPatwariDocument]]:
     documents: list[tuple[int, DigitalPatwariDocument]] = []
     for path in sorted(input_paths):
         if path.name.endswith("validation.json"):
             continue
-        document = _load_document_from_json(path)
-        documents.append((len(documents) + 1, document))
+        payload = json.loads(path.read_text(encoding="utf-8"))
+        page_number = _infer_page_number_from_payload(payload)
+        if page_number is None:
+            page_number = _page_number_from_filename(path) or (len(documents) + 1)
+        # Allow page JSON files to include a top-level `page_number` for the
+        # merge harness without making the schema itself accept unknown root
+        # fields.
+        if isinstance(payload, dict) and "page_number" in payload:
+            payload = {k: v for k, v in payload.items() if k != "page_number"}
+        document = DigitalPatwariDocument.model_validate(payload)
+        documents.append((page_number, document))
     if not documents:
         raise ValueError("No valid DigitalPatwariDocument JSON files found in input path.")
     return documents

@@ -163,7 +163,7 @@ this precisely:
 `resolve_owner_entitlements`) — every Khatauni is governed by exactly one owner
 group, never zero (omission) and never two (double-counting). Do not implement
 "every Owner must belong to a Khatauni" as a shortcut; that was tried and reverted
-after a real Fard (Khewat 219 of a real Sanghol Jamabandi) showed Khataunis with
+after a real Fard (Khewat 198/185 with Khatauni 219 of a real Sanghol Jamabandi) showed Khataunis with
 completely disjoint owner cohorts under one Khewat, and Khataunis with no owner row
 at all that still had valid, inherited ownership.
 
